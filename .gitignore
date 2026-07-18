@@ -1,0 +1,13 @@
+.env
+.vercel
+__pycache__/
+*.pyc
+
+# Raw organizer zip (superseded by the extracted realdoor-hackathon-starter-pack/)
+RealDoor_Hackathon_Starter_Pack_v1.zip
+RealDoor_Hackathon_Starter_Pack_v1 (1).zip
+files (1).zip
+
+# Superseded duplicate README drafts (README.md is canonical)
+README (1).md
+README (3).md

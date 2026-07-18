@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RealDoor — Transparent Property Explorer</title>
+<style>
+  :root{
+    --paper:#F4F6F7; --card:#FFFFFF; --ink:#141E26; --ink-soft:#4A5A66;
+    --line:#DDE4E7; --slate:#245C6B; --slate-deep:#173C46;
+    --amber:#9A6410; --amber-bg:#FBF3E4; --focus:#0A7EA4;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Mono","Roboto Mono",Menlo,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:16px}
+  a{color:var(--focus)}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* ---- masthead / thesis ---- */
+  header{background:var(--slate-deep);color:#EAF2F4;padding:26px 0 22px}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8FC0CC;margin:0 0 6px}
+  h1{margin:0;font-size:30px;font-weight:800;letter-spacing:-.02em}
+  .sub{margin:8px 0 0;color:#B9D2D9;max-width:60ch;font-size:15px}
+
+  /* ---- the signature guardrail receipt ---- */
+  .receipt{margin-top:20px;border:1px solid #2E5A66;background:#12333C;border-radius:10px;
+    display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden}
+  .receipt div{padding:14px 16px;border-right:1px solid #2E5A66}
+  .receipt div:last-child{border-right:0}
+  .receipt .n{font-family:var(--mono);font-size:26px;font-weight:700;color:#EAF2F4;letter-spacing:-.02em}
+  .receipt .l{font-size:12px;color:#9BC2CC;margin-top:2px;text-transform:uppercase;letter-spacing:.08em}
+  @media(max-width:720px){.receipt{grid-template-columns:repeat(2,1fr)}.receipt div:nth-child(2){border-right:0}}
+
+  /* ---- layout ---- */
+  .grid{display:grid;grid-template-columns:270px 1fr;gap:26px;padding:26px 0 60px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+
+  aside{position:sticky;top:16px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 16px 18px;margin-bottom:16px}
+  .panel h2{margin:0 0 4px;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate-deep)}
+  .panel .hint{font-size:12.5px;color:var(--ink-soft);margin:0 0 12px}
+  fieldset{border:0;padding:0;margin:0 0 14px}
+  legend{font-weight:700;font-size:13.5px;padding:0;margin-bottom:7px}
+  .chk{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:14px;cursor:pointer}
+  .chk input{width:17px;height:17px;accent-color:var(--slate);cursor:pointer}
+  select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:7px;font:inherit;background:#fff}
+  .reset{margin-top:2px;background:none;border:1px solid var(--line);border-radius:7px;padding:8px 12px;
+    font:inherit;font-size:13px;cursor:pointer;color:var(--slate-deep)}
+  .reset:hover{background:var(--paper)}
+
+  /* renter-selected context = amber = opt-in */
+  .ctx{background:var(--amber-bg);border-color:#EAD9BB}
+  .ctx h2{color:var(--amber)}
+  .ctx .note{font-size:12.5px;color:#6B4A11;margin-top:10px;display:none}
+  .ctx .note.on{display:block}
+
+  /* ---- map ---- */
+  .mapcard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px 8px;margin-bottom:16px}
+  .maphead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .maphead h2{margin:0;font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--slate-deep)}
+  .count{font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+  svg .pt{fill:var(--slate);opacity:.82;cursor:pointer;transition:opacity .12s}
+  svg .pt:hover,svg .pt:focus{opacity:1;stroke:var(--slate-deep);stroke-width:2}
+  svg .pt.sel{fill:var(--amber);opacity:1;stroke:var(--amber);stroke-width:3}
+  svg text{font-family:var(--mono);fill:#8AA2AC;font-size:9px}
+  .caveat{font-size:12px;color:var(--ink-soft);font-family:var(--mono);padding:6px 2px 8px}
+
+  /* ---- toolbar ---- */
+  .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .sortwrap{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-soft)}
+  .sortwrap select{width:auto}
+  .ordernote{font-size:12px;color:var(--ink-soft);font-style:italic}
+
+  /* ---- cards ---- */
+  .list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:1080px){.list{grid-template-columns:1fr}}
+  .prop{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 16px;scroll-margin-top:16px}
+  .prop.sel{border-color:var(--amber);box-shadow:0 0 0 2px var(--amber-bg)}
+  .prop h3{margin:0 0 2px;font-size:16.5px;letter-spacing:-.01em}
+  .addr{font-size:13.5px;color:var(--ink-soft);margin:0 0 10px}
+  .avail{display:inline-flex;align-items:center;gap:6px;background:#EEF2F3;border:1px solid var(--line);
+    color:var(--ink-soft);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600;margin-bottom:12px}
+  .avail svg{width:13px;height:13px;flex:none}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:13px;border-top:1px solid var(--line);padding-top:11px}
+  .facts dt{color:var(--ink-soft)}
+  .facts dd{margin:0;font-family:var(--mono);color:var(--ink)}
+  .mix{font-family:var(--mono);font-size:12.5px;color:var(--slate-deep);margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
+  .mix b{color:var(--ink);font-weight:700}
+  .geo{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-top:9px}
+
+  .empty{background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:34px;text-align:center;color:var(--ink-soft)}
+  .empty b{color:var(--ink)}
+
+  footer{border-top:1px solid var(--line);background:#fff;padding:22px 0;font-size:12.5px;color:var(--ink-soft)}
+  footer p{margin:0 0 6px;max-width:82ch}
+
+  :focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+  .skip{position:absolute;left:-999px;top:0;background:#fff;padding:8px 14px;z-index:10}
+  .skip:focus{left:12px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#results">Skip to property list</a>
+
+<header>
+  <div class="wrap">
+    <p class="kicker">RealDoor · Discover · Boston-Cambridge-Quincy HMFA · <a href="realdoor_app.html">← Back to Profile / Understand / Prepare</a></p>
+    <h1>Transparent Property Explorer</h1>
+    <p class="sub">Every affordable-housing project record in the teaching subset — shown in full, ordered by nothing, judged by no one. You choose the filters. You draw the conclusions.</p>
+    <div class="receipt" role="group" aria-label="What this tool does and does not do">
+      <div><div class="n" id="stat-shown">32</div><div class="l">Records shown</div></div>
+      <div><div class="n">0</div><div class="l">Ranked or scored</div></div>
+      <div><div class="n">0</div><div class="l">Acceptance predicted</div></div>
+      <div><div class="n">?</div><div class="l">Availability, by design</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap grid">
+  <aside aria-label="Filters and context">
+    <div class="panel">
+      <h2>Your filters</h2>
+      <p class="hint">All off by default — the full set stays visible. Filters only hide; they never reorder or recommend.</p>
+      <fieldset id="bedrooms">
+        <legend>Contains bedroom types</legend>
+        <label class="chk"><input type="checkbox" value="studio"> Studio</label>
+        <label class="chk"><input type="checkbox" value="br1"> 1 bedroom</label>
+        <label class="chk"><input type="checkbox" value="br2"> 2 bedroom</label>
+        <label class="chk"><input type="checkbox" value="br3"> 3 bedroom</label>
+        <label class="chk"><input type="checkbox" value="br4"> 4 bedroom</label>
+      </fieldset>
+      <fieldset>
+        <legend><label for="city-sel">City</label></legend>
+        <select id="city-sel"><option value="">All cities</option></select>
+      </fieldset>
+      <button class="reset" id="reset" type="button">Clear all filters</button>
+    </div>
+
+    <div class="panel ctx">
+      <h2>Context layers · renter-selected</h2>
+      <p class="hint">Optional, aggregate context only. Never used to rank, filter silently, or predict acceptance.</p>
+      <label class="chk"><input type="checkbox" id="ctx-transit"> Transit access (MBTA)</label>
+      <label class="chk"><input type="checkbox" id="ctx-need"> Housing need (HUD CHAS)</label>
+      <p class="note" id="ctx-note">Context layers are wired to renter-selected public sources (MBTA V3, HUD CHAS). They display as neutral context beside a property you are already viewing — they do not change which properties appear or their order, and they are never combined into a score.</p>
+    </div>
+  </aside>
+
+  <main>
+    <div class="mapcard">
+      <div class="maphead">
+        <h2>Metro location</h2>
+        <span class="count" id="map-count" aria-hidden="true"></span>
+      </div>
+      <svg id="map" viewBox="0 0 620 340" role="img" aria-label="Scatter plot of property locations by coordinate. Use the property list below for full details."></svg>
+      <p class="caveat">Points show a general project location (HUD geocode precision). Not an address, not a vacancy, not a rent.</p>
+    </div>
+
+    <div class="toolbar">
+      <div class="sortwrap">
+        <label for="sort">Order</label>
+        <select id="sort">
+          <option value="none">Dataset order</option>
+          <option value="az">Name A–Z</option>
+          <option value="city">City A–Z</option>
+        </select>
+        <span class="ordernote">Order is not a recommendation.</span>
+      </div>
+      <span class="count" id="live-count" role="status" aria-live="polite"></span>
+    </div>
+
+    <div id="results" class="list" tabindex="-1"></div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Source:</strong> HUD LIHTC property layer, 32-record teaching subset (retrieved 2026-07-18). This is a record of projects and units — <strong>not</strong> a vacancy, rent, waitlist, ownership, or application-status feed.</p>
+    <p><strong>Boundary:</strong> RealDoor Discover never approves, denies, scores, ranks, predicts acceptance, or infers protected traits. Availability is unknown unless a renter separately supplies it. The unfiltered set is always one click away.</p>
+  </div>
+</footer>
+
+<script>
+const DATA = [{"id":"MAB20200006","name":"Burbank Apts","addr":"31 Burbank Street","city":"Boston","zip":"02115","total":52,"li":39,"studio":28,"br1":22,"br2":2,"br3":0,"br4":0,"yr":"2020","lat":42.344479,"lon":-71.087577,"geo":"R"},{"id":"MAB20120035","name":"Castle Square Ii","addr":"494 Tremont St","city":"Boston","zip":"02116","total":500,"li":500,"studio":0,"br1":144,"br2":159,"br3":132,"br4":65,"yr":"2012","lat":42.345220999999995,"lon":-71.06962,"geo":"R"},{"id":"MAB00000253","name":"Dartmouth Tcb","addr":"792 Tremont St","city":"Boston","zip":"02118","total":83,"li":83,"studio":4,"br1":16,"br2":40,"br3":18,"br4":5,"yr":"8888","lat":42.338716999999995,"lon":-71.08095,"geo":"R"},{"id":"MAB20080050","name":"Dudley Village South","addr":"571 Dudley St","city":"Boston","zip":"02125","total":26,"li":26,"studio":0,"br1":3,"br2":10,"br3":10,"br4":3,"yr":"2008","lat":42.320786999999996,"lon":-71.07221899999999,"geo":"R"},{"id":"MAB20151006","name":"Georgetown Homes Phase One","addr":"11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41 Georgetown Drive","city":"Boston","zip":"01570","total":0,"li":0,"studio":0,"br1":0,"br2":0,"br3":0,"br4":0,"yr":"2015","lat":42.258866,"lon":-71.14954399999999,"geo":"R"},{"id":"MAA19950005","name":"Heritage At Cleveland Circle","addr":"50 Sutherland Rd","city":"Boston","zip":"02135","total":90,"li":18,"studio":25,"br1":65,"br2":0,"br3":0,"br4":0,"yr":"1995","lat":42.337748999999995,"lon":-71.15002799999999,"geo":"R"},{"id":"MAB20110110","name":"Jamaica Plain Apts","addr":"48 School St","city":"Boston","zip":"02108","total":103,"li":103,"studio":0,"br1":9,"br2":20,"br3":53,"br4":21,"yr":"2011","lat":42.357637,"lon":-71.05985199999999,"geo":"R"},{"id":"MAB19940100","name":"Project Home","addr":"1688 Washington St","city":"Boston","zip":"02118","total":3,"li":3,"studio":0,"br1":0,"br2":0,"br3":0,"br4":0,"yr":"1994","lat":42.337106,"lon":-71.075808,"geo":"R"},{"id":"MAB20040065","name":"Robert L Fortes House","addr":"541 Shawmut Ave","city":"Boston","zip":"02118","total":44,"li":44,"studio":0,"br1":44,"br2":0,"br3":0,"br4":0,"yr":"2004","lat":42.337171999999995,"lon":-71.078621,"geo":"R"},{"id":"MAB20040070","name":"Roxbury Tenants","addr":"44 Francis St","city":"Boston","zip":"02115","total":20,"li":13,"studio":0,"br1":0,"br2":5,"br3":15,"br4":0,"yr":"2004","lat":42.335521,"lon":-71.106662,"geo":"R"},{"id":"MAB20191007","name":"The Clarion","addr":"295-311 Blue Hill Avenue","city":"Boston","zip":"02121","total":63,"li":61,"studio":0,"br1":0,"br2":22,"br3":25,"br4":16,"yr":"2019","lat":42.314327999999996,"lon":-71.079239,"geo":"R"},{"id":"MAB20040075","name":"The Metropolitan","addr":"1 Nassau St","city":"Boston","zip":"02111","total":81,"li":81,"studio":35,"br1":6,"br2":30,"br3":10,"br4":0,"yr":"2004","lat":42.348689,"lon":-71.063189,"geo":"R"},{"id":"MAB20172003","name":"Wayne At Bicknell","addr":"92-94 Esmond Street","city":"Boston","zip":"02121","total":72,"li":72,"studio":0,"br1":15,"br2":32,"br3":21,"br4":4,"yr":"2017","lat":42.297140999999996,"lon":-71.08348099999999,"geo":"R"},{"id":"MAB20171012","name":"Whittier Place","addr":"60 Southern Avenue","city":"Boston","zip":"02124","total":44,"li":44,"studio":0,"br1":3,"br2":33,"br3":3,"br4":2,"yr":"2017","lat":42.290133999999995,"lon":-71.07453799999999,"geo":"R"},{"id":"MAB20161001","name":"51-57 Beals Street","addr":"55-57 Beals Street","city":"Brookline","zip":"02446","total":31,"li":31,"studio":31,"br1":0,"br2":0,"br3":0,"br4":0,"yr":"2016","lat":42.346019999999996,"lon":-71.12476099999999,"geo":"R"},{"id":"MAC00000005","name":"51-57 Beals Street","addr":"57 Beals St","city":"Brookline","zip":"02446","total":31,"li":0,"studio":0,"br1":0,"br2":0,"br3":0,"br4":0,"yr":"8888","lat":42.345863,"lon":-71.124924,"geo":"R"},{"id":"MAB20150003","name":"Bishop Allen Apartments","addr":"70 + 77 Bishop Allen Drive; 51 + 62 Norfolk Street","city":"Cambridge","zip":"02139","total":32,"li":32,"studio":0,"br1":0,"br2":5,"br3":27,"br4":0,"yr":"2015","lat":42.3669,"lon":-71.1035,"geo":"T"},{"id":"MAB20030025","name":"Cambridge Alliance","addr":"55 Columbia St","city":"Cambridge","zip":"02139","total":42,"li":37,"studio":0,"br1":6,"br2":12,"br3":16,"br4":8,"yr":"2003","lat":42.364898,"lon":-71.099308,"geo":"R"},{"id":"MAB20050055","name":"Lancaster Street Apts","addr":"8 Lancaster St","city":"Cambridge","zip":"02140","total":65,"li":55,"studio":16,"br1":48,"br2":1,"br3":0,"br4":0,"yr":"2005","lat":42.385428,"lon":-71.120049,"geo":"R"},{"id":"MAB20160003","name":"Temple Place","addr":"5 Temple Street","city":"Cambridge","zip":"02139","total":41,"li":41,"studio":0,"br1":11,"br2":30,"br3":0,"br4":0,"yr":"2016","lat":42.366769,"lon":-71.104125,"geo":"R"},{"id":"MAB00000307","name":"Harborcov Community Housing","addr":"63 Washington Ave","city":"Chelsea","zip":"02150","total":24,"li":24,"studio":0,"br1":3,"br2":16,"br3":5,"br4":0,"yr":"8888","lat":42.395120999999996,"lon":-71.032876,"geo":"R"},{"id":"MAB20130011","name":"Highland Terrace","addr":"47 Gerrish Ave","city":"Chelsea","zip":"02150","total":32,"li":0,"studio":0,"br1":4,"br2":24,"br3":4,"br4":0,"yr":"2013","lat":42.393589,"lon":-71.02928399999999,"geo":"R"},{"id":"MAB20080100","name":"Till Building","addr":"241 Broadway","city":"Chelsea","zip":"02150","total":23,"li":23,"studio":0,"br1":2,"br2":19,"br3":2,"br4":0,"yr":"2008","lat":42.390446999999995,"lon":-71.037881,"geo":"R"},{"id":"MAB20080080","name":"Parkway Heights","addr":"201 Chelsea St","city":"Everett","zip":"02149","total":74,"li":47,"studio":0,"br1":26,"br2":48,"br3":0,"br4":0,"yr":"2008","lat":42.403316,"lon":-71.047738,"geo":"R"},{"id":"MAB19920045","name":"Whitney-Lorenti House","addr":"15 Summer St","city":"Everett","zip":"02149","total":50,"li":50,"studio":0,"br1":40,"br2":10,"br3":0,"br4":0,"yr":"1992","lat":42.408500000000004,"lon":-71.053117,"geo":"R"},{"id":"MAB20050035","name":"Cross Street Housing","addr":"354 Cross St","city":"Malden","zip":"02148","total":19,"li":0,"studio":0,"br1":0,"br2":15,"br3":3,"br4":1,"yr":"2005","lat":42.424845,"lon":-71.055705,"geo":"R"},{"id":"MAB20120060","name":"Heritage 195 Pleasant St","addr":"195 Pleasant St","city":"Malden","zip":"02148","total":176,"li":156,"studio":32,"br1":144,"br2":0,"br3":0,"br4":0,"yr":"2012","lat":42.427368,"lon":-71.072063,"geo":"R"},{"id":"MAB19910040","name":"Kendrigan Place","addr":"10 Winter St","city":"Quincy","zip":"02169","total":78,"li":64,"studio":0,"br1":20,"br2":49,"br3":0,"br4":0,"yr":"1991","lat":42.241239,"lon":-70.979969,"geo":"R"},{"id":"MAB20120115","name":"Winter Gardens Apts","addr":"45 Winter St","city":"Quincy","zip":"02169","total":24,"li":24,"studio":0,"br1":3,"br2":18,"br3":3,"br4":0,"yr":"2012","lat":42.240885,"lon":-70.979697,"geo":"R"},{"id":"MAB00000055","name":"33 Bow St","addr":"33 Bow St","city":"Somerville","zip":"02143","total":18,"li":16,"studio":0,"br1":0,"br2":14,"br3":2,"br4":2,"yr":"8888","lat":42.381785,"lon":-71.09766499999999,"geo":"R"},{"id":"MAB20090060","name":"St Polycarp I","addr":"460 Mystic Ave","city":"Somerville","zip":"02145","total":24,"li":24,"studio":0,"br1":6,"br2":12,"br3":6,"br4":0,"yr":"2009","lat":42.396555,"lon":-71.09075299999999,"geo":"R"},{"id":"MAB20140014","name":"St Polycarp Iii","addr":"5 Memorial Rd","city":"Somerville","zip":"02145","total":31,"li":31,"studio":0,"br1":7,"br2":17,"br3":7,"br4":0,"yr":"2014","lat":42.395576999999996,"lon":-71.091309,"geo":"R"}];
+const LAT0=42.240885, LAT1=42.427368, LON0=-71.150028, LON1=-70.979697;
+const PAD=24, W=620, H=340;
+const x = lon => PAD + (lon-LON0)/(LON1-LON0)*(W-2*PAD);
+const y = lat => H-PAD - (lat-LAT0)/(LAT1-LAT0)*(H-2*PAD);
+let selected=null;
+const svg=document.getElementById('map');
+const results=document.getElementById('results');
+const liveCount=document.getElementById('live-count');
+const mapCount=document.getElementById('map-count');
+const statShown=document.getElementById('stat-shown');
+
+// city dropdown
+const cities=[...new Set(DATA.map(d=>d.city))].sort();
+const citySel=document.getElementById('city-sel');
+cities.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;citySel.appendChild(o);});
+
+function activeBeds(){return [...document.querySelectorAll('#bedrooms input:checked')].map(i=>i.value);}
+
+function currentSet(){
+  const beds=activeBeds(); const city=citySel.value;
+  let set=DATA.filter(d=>{
+    if(city && d.city!==city) return false;
+    for(const b of beds){ if(!(d[b]>0)) return false; }
+    return true;
+  });
+  const s=document.getElementById('sort').value;
+  if(s==='az') set=[...set].sort((a,b)=>a.name.localeCompare(b.name));
+  else if(s==='city') set=[...set].sort((a,b)=>a.city.localeCompare(b.city)||a.name.localeCompare(b.name));
+  return set;
+}
+
+function mixStr(d){
+  const parts=[];
+  if(d.studio)parts.push(d.studio+' studio');
+  if(d.br1)parts.push(d.br1+' × 1BR');
+  if(d.br2)parts.push(d.br2+' × 2BR');
+  if(d.br3)parts.push(d.br3+' × 3BR');
+  if(d.br4)parts.push(d.br4+' × 4BR');
+  return parts.join(' · ')||'Unit mix not itemized';
+}
+const UNKNOWN='<span class="avail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 2-2.4 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg>Availability: Unknown — project record, not a vacancy feed</span>';
+
+function drawMap(set){
+  const ids=new Set(set.map(d=>d.id));
+  svg.innerHTML='';
+  // frame
+  const fr=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  fr.setAttribute('x',1);fr.setAttribute('y',1);fr.setAttribute('width',W-2);fr.setAttribute('height',H-2);
+  fr.setAttribute('fill','none');fr.setAttribute('stroke','#E3EAEC');fr.setAttribute('rx',8);svg.appendChild(fr);
+  DATA.forEach(d=>{
+    if(!ids.has(d.id)) return;
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x(d.lon).toFixed(1));c.setAttribute('cy',y(d.lat).toFixed(1));
+    c.setAttribute('r',7);c.setAttribute('class','pt'+(d.id===selected?' sel':''));
+    c.setAttribute('tabindex','0');c.setAttribute('role','button');
+    c.setAttribute('aria-label',d.name+', '+d.city+'. Show details.');
+    const act=()=>{selected=d.id;render();document.getElementById('card-'+d.id)?.scrollIntoView({block:'nearest'});};
+    c.addEventListener('click',act);
+    c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}});
+    svg.appendChild(c);
+  });
+}
+
+function render(){
+  const set=currentSet();
+  drawMap(set);
+  const n=set.length;
+  statShown.textContent=n;
+  mapCount.textContent=n+' of 32 shown';
+  liveCount.textContent=n+(n===1?' property':' properties')+' shown of 32';
+  results.innerHTML='';
+  if(n===0){
+    results.innerHTML='<div class="empty"><b>No records match your filters.</b><br>These filters hide records — none is removed. <button class="reset" onclick="document.getElementById(\'reset\').click()">Clear all filters</button> to see all 32.</div>';
+    return;
+  }
+  set.forEach(d=>{
+    const el=document.createElement('article');
+    el.className='prop'+(d.id===selected?' sel':'');
+    el.id='card-'+d.id;
+    el.innerHTML=
+      '<h3>'+d.name+'</h3>'+
+      '<p class="addr">'+d.addr+', '+d.city+' '+d.zip+'</p>'+
+      UNKNOWN+
+      '<dl class="facts">'+
+        '<dt>Affordable units</dt><dd>'+d.li+' of '+d.total+'</dd>'+
+        '<dt>Placed in service</dt><dd>'+(d.yr||'—')+'</dd>'+
+      '</dl>'+
+      '<div class="mix"><b>Unit mix:</b> '+mixStr(d)+'</div>'+
+      '<div class="geo">◧ '+d.lat.toFixed(5)+', '+d.lon.toFixed(5)+' · geocode '+d.geo+' (general location)</div>';
+    results.appendChild(el);
+  });
+}
+
+document.querySelectorAll('#bedrooms input, #city-sel, #sort').forEach(el=>el.addEventListener('change',()=>{selected=null;render();}));
+document.getElementById('reset').addEventListener('click',()=>{
+  document.querySelectorAll('#bedrooms input').forEach(i=>i.checked=false);
+  citySel.value='';document.getElementById('sort').value='none';selected=null;render();
+});
+function ctxToggle(){
+  const on=document.getElementById('ctx-transit').checked||document.getElementById('ctx-need').checked;
+  document.getElementById('ctx-note').classList.toggle('on',on);
+}
+document.getElementById('ctx-transit').addEventListener('change',ctxToggle);
+document.getElementById('ctx-need').addEventListener('change',ctxToggle);
+
+render();
+</script>
+</body>
+</html>

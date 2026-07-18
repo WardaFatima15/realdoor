@@ -1,0 +1,13 @@
+# Deterministic scored core (readiness.py, calculate.py [shipped], thresholds.py,
+# rules_qa.py, session.py) is standard-library only and needs nothing here to
+# pass `python -m unittest` offline.
+#
+# These two are used by the ingest/extract/pipeline layer and by the test
+# suite's schema validation, but are NOT required for the shipped
+# starter/tests to pass. PyMuPDF is also used by server.py's
+# /api/extract-upload endpoint (see api/requirements.txt for the copy that
+# actually matters on the deployed Vercel function):
+PyMuPDF>=1.24        # src/ingest.py, src/extract.py -- PDF text-layer + bbox reading
+jsonschema>=4.20     # src/pipeline.py, tests/test_submission_schema.py -- real schema validation
+                     #   (pipeline.py and tests fall back to a minimal manual
+                     #   check if jsonschema is not installed)

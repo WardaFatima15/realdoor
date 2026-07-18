@@ -1,0 +1,21 @@
+{
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "includeFiles": [
+          "src/**",
+          "realdoor-hackathon-starter-pack/**",
+          "output/**",
+          "realdoor_app.html",
+          "realdoor_property_explorer.html",
+          "realdoor_evidence_overlay.html"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "api/index.py" }
+  ]
+}

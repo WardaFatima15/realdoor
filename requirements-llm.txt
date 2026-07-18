@@ -1,0 +1,10 @@
+# Optional AI explanation layer (src/llm.py, server.py). NOT required for
+# the scored deterministic core (readiness.py, thresholds.py, rules_qa.py,
+# calculate.py) or for `python -m unittest discover -s tests`, which stay
+# stdlib-only and pass with none of this installed.
+#
+# Install with: pip install -r requirements-llm.txt
+openai>=1.0          # src/llm.py -- OpenAI client; wraps the chat completions API
+flask>=3.0           # server.py  -- tiny local server exposing /api/explain, /api/coach,
+                     #   /api/ask, /api/redteam, /api/health; keeps the API key server-side
+python-dotenv>=1.0   # server.py  -- optional: loads OPENAI_API_KEY from a local .env file

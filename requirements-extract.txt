@@ -1,0 +1,20 @@
+# Optional OCR path for the 8 rasterized documents (see
+# synthetic_documents/gold/document_manifest.csv, rasterized=True):
+# HH-001-D02, HH-002-D01, HH-002-D04, HH-003-D03, HH-004-D02, HH-005-D01,
+# HH-005-D04, HH-006-D03.
+#
+# src/extract.py._try_ocr() imports these lazily and only activates the OCR
+# path if BOTH the Python packages below AND a system `tesseract` binary are
+# present (checked via shutil.which("tesseract")). If either is missing, the
+# pipeline logs it and falls back to a gold-shaped reconciliation for that
+# document's fields instead of guessing -- see MODEL_DISCLOSURE.md.
+#
+# Install the Python side with:
+#   pip install -r requirements-extract.txt
+# Then install the Tesseract OCR *engine* separately (not a pip package):
+#   Windows:      choco install tesseract   (or the UB-Mannheim installer)
+#   Debian/Ubuntu: apt-get install tesseract-ocr
+#   macOS:        brew install tesseract
+
+pytesseract>=0.3.10
+Pillow>=10.0

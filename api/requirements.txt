@@ -1,0 +1,10 @@
+# Runtime deps for the deployed serverless function (api/index.py -> server.py).
+# Vercel's Python builder installs from whichever requirements.txt sits next
+# to the function entrypoint, so this mirrors requirements-llm.txt rather
+# than the root requirements.txt (which covers the local PDF/OCR build-time
+# pipeline) -- PyMuPDF is listed here too because /api/extract-upload now
+# runs real PDF ingest/extract inside this request-serving function.
+flask>=3.0
+openai>=1.0
+python-dotenv>=1.0
+PyMuPDF>=1.24        # server.py's /api/extract-upload -- lazily imported, see that route
