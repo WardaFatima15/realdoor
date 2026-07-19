@@ -74,6 +74,16 @@ def _load_adversarial_rows():
     return rows
 
 
+def _language(data: dict) -> str:
+    """Validate the optional "language" field to {"en", "es"}; anything
+    else (missing, unknown code, wrong type) falls back to "en". This is
+    the only server-side validation needed -- src/llm.py itself coerces
+    any non-"en"/"es" value to "en" too, so this is defense in depth, not
+    the only guard."""
+    lang = data.get("language")
+    return lang if lang in ("en", "es") else "en"
+
+
 def _header_source(source: str) -> str:
     """Map llm.py's internal source tag to the two-value header the UI
     badges on: 'openai' or 'deterministic'."""
@@ -313,7 +323,7 @@ def api_explain():
     profile = _load_profile(data.get("household_id"))
     if profile is None:
         return jsonify({"error": "unknown or missing household_id"}), 404
-    source, chunks = llm.explain_stream(profile)
+    source, chunks = llm.explain_stream(profile, _language(data))
     return _stream_response(source, chunks)
 
 
@@ -323,7 +333,7 @@ def api_coach():
     profile = _load_profile(data.get("household_id"))
     if profile is None:
         return jsonify({"error": "unknown or missing household_id"}), 404
-    source, chunks = llm.coach_stream(profile)
+    source, chunks = llm.coach_stream(profile, _language(data))
     return _stream_response(source, chunks)
 
 
@@ -357,7 +367,7 @@ def api_ask():
 
     # --- Otherwise: grounded answer via src/llm.py (its own internal
     # decision-boundary guardrails still apply; see src/llm.py::ask). ---
-    text, source = llm.ask(question, profile, _ASK_RULE_CONTEXT)
+    text, source = llm.ask(question, profile, _ASK_RULE_CONTEXT, _language(data))
     citations = [cite(rid) for rid in _ASK_RULE_CONTEXT]
     body = jsonify({"answer": text, "citations": citations, "category": "grounded", "refused": False})
     body.headers["x-realdoor-source"] = _header_source(source)

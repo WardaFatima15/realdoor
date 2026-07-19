@@ -7,38 +7,44 @@
 <meta name="description" content="A grounded renter-readiness workspace: extracted evidence with source boxes, cited rules, and a document-readiness checklist. Never a final program decision.">
 <style>
   :root{
-    --bg0:#0C1316; --bg1:#0F1A1E; --studio:#0A1013;
-    --card:#16242A; --card-soft:#132025; --line:#26383F; --ink:#EAF2F4; --ink-soft:#9FB4BC;
-    --gold:#F3B33F; --gold-soft:rgba(243,179,63,.16); --teal:#39C0CC; --teal-soft:rgba(57,192,204,.14);
-    --ok:#5BD6A6; --ok-soft:rgba(91,214,166,.14); --warn:#F3B33F; --danger:#F0876B; --danger-soft:rgba(240,135,107,.14);
-    --focus:#7FD6E0;
+    --bg0:#08090A; --bg1:#0D0E10; --studio:#060607;
+    --card:#101113; --card-soft:#0C0D0F; --line:rgba(255,255,255,.09); --ink:#F4F5F4; --ink-soft:#9AA2AD;
+    --gold:#FBBF24; --gold-soft:rgba(251,191,36,.14); --teal:#2DD4BF; --teal-soft:rgba(45,212,191,.14);
+    --ok:#4ADE80; --ok-soft:rgba(74,222,128,.14); --warn:#FBBF24; --danger:#F87171; --danger-soft:rgba(248,113,113,.14);
+    --focus:#2DD4BF;
+    --brand-gradient:linear-gradient(90deg,#4D8DFF,#2DD4BF,#4ADE80);
     --mono:"SFMono-Regular",ui-monospace,"Cascadia Mono",Menlo,monospace;
     --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
     color-scheme: dark;
   }
   :root[data-theme="light"]{
-    --bg0:#F5F3EE; --bg1:#FBFAF7; --studio:#EFEBE2;
-    --card:#FFFFFF; --card-soft:#F7F5F0; --line:#DFDACD; --ink:#1C1A14; --ink-soft:#5B584C;
-    --gold:#9A6608; --gold-soft:rgba(154,102,8,.12); --teal:#0E7C88; --teal-soft:rgba(14,124,136,.10);
-    --ok:#12704C; --ok-soft:rgba(18,112,76,.12); --warn:#9A6608; --danger:#B23B1E; --danger-soft:rgba(178,59,30,.10);
-    --focus:#0E7C88;
+    --bg0:#FAFAF9; --bg1:#FFFFFF; --studio:#F1F2F0;
+    --card:#FFFFFF; --card-soft:#F4F5F4; --line:#E5E7E4; --ink:#14171A; --ink-soft:#5B626B;
+    --gold:#92400E; --gold-soft:rgba(146,64,14,.10); --teal:#0F766E; --teal-soft:rgba(15,118,110,.08);
+    --ok:#15803D; --ok-soft:rgba(21,128,61,.10); --warn:#92400E; --danger:#B91C1C; --danger-soft:rgba(185,28,28,.10);
+    --focus:#0F766E;
     color-scheme: light;
   }
   @media (prefers-color-scheme: light){
     :root:not([data-theme="dark"]){
-      --bg0:#F5F3EE; --bg1:#FBFAF7; --studio:#EFEBE2;
-      --card:#FFFFFF; --card-soft:#F7F5F0; --line:#DFDACD; --ink:#1C1A14; --ink-soft:#5B584C;
-      --gold:#9A6608; --gold-soft:rgba(154,102,8,.12); --teal:#0E7C88; --teal-soft:rgba(14,124,136,.10);
-      --ok:#12704C; --ok-soft:rgba(18,112,76,.12); --warn:#9A6608; --danger:#B23B1E; --danger-soft:rgba(178,59,30,.10);
-      --focus:#0E7C88;
+      --bg0:#FAFAF9; --bg1:#FFFFFF; --studio:#F1F2F0;
+      --card:#FFFFFF; --card-soft:#F4F5F4; --line:#E5E7E4; --ink:#14171A; --ink-soft:#5B626B;
+      --gold:#92400E; --gold-soft:rgba(146,64,14,.10); --teal:#0F766E; --teal-soft:rgba(15,118,110,.08);
+      --ok:#15803D; --ok-soft:rgba(21,128,61,.10); --warn:#92400E; --danger:#B91C1C; --danger-soft:rgba(185,28,28,.10);
+      --focus:#0F766E;
       color-scheme: light;
     }
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;font-family:var(--sans);color:var(--ink);
-    background:radial-gradient(1200px 700px at 30% -10%,var(--bg1) 0%,var(--bg0) 60%);min-height:100vh;
-    line-height:1.5;}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--bg0);min-height:100vh;
+    line-height:1.5;position:relative}
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(40% 42% at 22% 0%, rgba(77,141,255,.07), transparent 70%),
+      radial-gradient(40% 42% at 78% 0%, rgba(45,212,191,.06), transparent 70%),
+      radial-gradient(50% 40% at 50% 100%, rgba(74,222,128,.04), transparent 70%);
+    background-color:var(--bg0)}
   a{color:var(--teal)}
   .wrap{max-width:1240px;margin:0 auto;padding:20px 20px 64px}
   :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
@@ -48,12 +54,15 @@
     padding:10px 14px;border-radius:8px;border:1px solid var(--line);z-index:100;transition:top .15s}
   .skip-link:focus{top:8px}
 
-  header.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
-    flex-wrap:wrap;margin-bottom:18px}
+  header.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
+    flex-wrap:wrap;margin-bottom:26px;padding-top:14px;position:relative}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--teal);margin:0 0 8px}
-  h1{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em}
-  .lead{margin:8px 0 0;color:var(--ink-soft);max-width:70ch;font-size:14.5px}
+    color:var(--teal);margin:0 0 10px}
+  h1{margin:0;font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1.05;
+    position:relative;display:inline-block}
+  h1::after{content:"";position:absolute;left:2px;right:auto;bottom:-10px;width:56px;height:3px;
+    border-radius:2px;background:var(--brand-gradient)}
+  .lead{margin:20px 0 0;color:var(--ink-soft);max-width:64ch;font-size:15.5px;line-height:1.65}
   .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 
   select, input[type=text], input[type=number]{
@@ -65,31 +74,47 @@
   button{font-family:var(--sans);cursor:pointer}
   .btn{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;
     padding:9px 14px;border-radius:9px;border:1px solid var(--line);background:var(--card);
-    color:var(--ink)}
-  .btn:hover{border-color:var(--teal)}
-  .btn.primary{background:var(--teal);border-color:var(--teal);color:#04181B}
+    color:var(--ink);transition:border-color .18s,transform .15s,box-shadow .18s,background-color .18s}
+  .btn:hover{border-color:var(--teal);transform:translateY(-1px);box-shadow:0 4px 14px -6px rgba(0,0,0,.5)}
+  .btn:active{transform:translateY(0)}
+  .btn.primary{background:var(--teal);border-color:var(--teal);color:#04201C}
   .btn.gold{background:var(--gold);border-color:var(--gold);color:#241900}
   .btn.danger{background:var(--danger);border-color:var(--danger);color:#2A0900}
   .btn.ghost{background:transparent}
   .btn[disabled]{opacity:.45;cursor:not-allowed}
+  .btn[disabled]:hover{transform:none;box-shadow:none}
+  @media (prefers-reduced-motion: reduce){ .btn{transition:border-color .18s,background-color .18s} .btn:hover{transform:none} }
 
-  nav.stage-nav{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 20px;
-    border-bottom:1px solid var(--line);padding-bottom:0}
-  nav.stage-nav button{background:transparent;border:none;border-bottom:3px solid transparent;
-    color:var(--ink-soft);font-weight:700;font-size:14px;padding:10px 6px;margin-right:14px}
-  nav.stage-nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
-  nav.stage-nav button .num{font-family:var(--mono);color:var(--teal);margin-right:6px}
+  nav.stage-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 26px}
+  @media(max-width:760px){nav.stage-nav{grid-template-columns:repeat(2,1fr)}}
+  nav.stage-nav button{display:flex;align-items:center;gap:11px;text-align:left;
+    background:var(--card);border:1px solid var(--line);border-radius:13px;
+    color:var(--ink-soft);font-weight:700;font-size:14.5px;padding:14px 16px;
+    transition:color .18s,border-color .18s,background-color .18s,transform .15s}
+  nav.stage-nav button:hover{color:var(--ink);border-color:var(--teal);transform:translateY(-1px)}
+  nav.stage-nav button[aria-selected="true"]{color:var(--ink);border-color:var(--teal);
+    background:var(--teal-soft);box-shadow:inset 0 0 0 1px var(--teal)}
+  nav.stage-nav button .num{font-family:var(--mono);color:var(--teal);font-size:12.5px;
+    display:inline-flex;align-items:center;justify-content:center;flex:none;
+    width:26px;height:26px;border-radius:50%;border:1.5px solid var(--teal);margin-right:0}
+  nav.stage-nav button[aria-selected="true"] .num{background:var(--teal);color:#04201C}
+  @media (prefers-reduced-motion: reduce){ nav.stage-nav button:hover{transform:none} }
 
   .stage{display:none}
-  .stage.active{display:block}
+  .stage.active{display:block;animation:stage-in .28s ease-out}
+  @keyframes stage-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @media (prefers-reduced-motion: reduce){ .stage.active{animation:none} }
 
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
-  .card + .card{margin-top:16px}
-  .grid2{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;
+    transition:border-color .2s,box-shadow .2s}
+  .card:hover{box-shadow:0 0 0 1px rgba(255,255,255,.06)}
+  .card + .card{margin-top:18px}
+  .grid2{display:grid;grid-template-columns:1fr 380px;gap:20px;align-items:start}
   @media(max-width:960px){.grid2{grid-template-columns:1fr}}
 
-  h2{font-size:18px;margin:0 0 4px}
-  h3{font-size:14.5px;margin:0 0 8px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+  h2{font-size:19px;margin:0 0 6px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+  h2::before{content:"";flex:none;width:4px;height:17px;border-radius:2px;background:var(--brand-gradient)}
+  h3{font-size:13.5px;margin:0 0 10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
 
   /* doc studio */
   .doc-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
@@ -132,8 +157,8 @@
   .tag.ok{border-color:var(--ok);color:var(--ok)}
   .tag.warn{border-color:var(--warn);color:var(--warn)}
 
-  .status-badge{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:15px;
-    padding:9px 14px;border-radius:10px;border:1.5px solid}
+  .status-badge{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:16.5px;
+    padding:11px 18px;border-radius:12px;border:1.5px solid;letter-spacing:-.01em}
   .status-badge.ready{color:var(--ok);border-color:var(--ok);background:var(--ok-soft)}
   .status-badge.needs{color:var(--warn);border-color:var(--warn);background:var(--gold-soft)}
 
@@ -142,11 +167,11 @@
   th{color:var(--ink-soft);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
   .table-wrap{overflow-x:auto}
 
-  .math-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line);
-    font-size:14px;gap:12px;flex-wrap:wrap}
+  .math-row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;
+    border-bottom:1px dashed var(--line);font-size:14px;gap:12px;flex-wrap:wrap}
   .math-row:last-child{border-bottom:none}
   .math-row .k{color:var(--ink-soft)}
-  .math-row .v{font-family:var(--mono);font-weight:700}
+  .math-row .v{font-family:var(--mono);font-weight:700;font-size:16.5px;letter-spacing:-.01em}
 
   .cite-strip{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 
@@ -178,8 +203,8 @@
     padding:10px 12px;font-size:13px}
   .quarantine-item .qi-head{font-family:var(--mono);font-size:11px;color:var(--danger);margin-bottom:4px}
 
-  .safety-banner{display:flex;gap:10px;align-items:flex-start;background:var(--teal-soft);
-    border:1px solid var(--teal);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:13.5px}
+  .safety-banner{display:flex;gap:11px;align-items:flex-start;background:var(--teal-soft);
+    border:1px solid var(--teal);border-radius:12px;padding:13px 17px;margin-bottom:22px;font-size:13.5px}
 
   .audit-log{font-size:12px;color:var(--ink-soft);margin-top:10px;max-height:160px;overflow:auto}
   .audit-log div{padding:4px 0;border-bottom:1px solid var(--line)}
@@ -286,6 +311,106 @@
     /* Static fallback: a plain dot instead of a spin animation. */
     .upload-spinner{animation:none;border-style:solid;border-top-color:rgba(255,255,255,.35)}
   }
+
+  /* ---- Printable application-readiness packet (Prepare stage) ----
+     #packet-print-root stays display:none on screen at all times; the
+     "printing-packet" class is only ever added to <body> for the
+     duration of window.print() (see printPacket()), and only the
+     @media print rules below ever make the packet visible or hide the
+     rest of the app -- so this never affects normal on-screen use. */
+  #packet-print-root{display:none}
+  @media print{
+    body.printing-packet > *:not(#packet-print-root){display:none !important}
+    body.printing-packet #packet-print-root{display:block !important;background:#fff;color:#000}
+    .packet{font-family:var(--sans);color:#000;background:#fff;max-width:100%;margin:0}
+    .packet h1{font-size:21px;margin:0 0 6px;color:#000;letter-spacing:normal}
+    .packet h2{font-size:14.5px;margin:20px 0 6px;color:#000;border-bottom:1.5px solid #000;padding-bottom:4px;letter-spacing:normal;text-transform:none}
+    .packet p{font-size:12px;line-height:1.55;margin:4px 0;color:#000}
+    .packet table{width:100%;border-collapse:collapse;margin:6px 0 12px;font-size:11.5px}
+    .packet th,.packet td{border:1px solid #000;padding:5px 7px;text-align:left;vertical-align:top;color:#000}
+    .packet th{background:#eee}
+    .packet .packet-disclaimer{font-style:italic;border:1px solid #000;padding:9px 11px;margin:10px 0}
+    .packet .packet-sig{display:flex;gap:48px;margin-top:44px}
+    .packet .packet-sig div{flex:1;border-top:1px solid #000;padding-top:5px;font-size:11.5px}
+    .packet .packet-footer{margin-top:26px;font-size:10.5px;color:#000;border-top:1px solid #000;padding-top:7px}
+    .packet .packet-reason{margin:3px 0}
+    .packet .packet-warn{font-weight:700}
+    @page{margin:14mm}
+  }
+
+  /* ---- Guided acceptance demo (header button + coach-mark overlay) ----
+     Every step drives the REAL app (setActiveStage/selectHousehold/real
+     clicks) and then spotlights a real, already-rendered element; nothing
+     here renders a second copy of app content. */
+  .tour-overlay[hidden]{display:none}
+  .tour-scrim{position:fixed;inset:0;z-index:300;background:transparent}
+  .tour-ring{position:fixed;z-index:301;pointer-events:none;border:3px solid var(--gold);
+    border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,.6);
+    transition:top .25s ease,left .25s ease,width .25s ease,height .25s ease}
+  .tour-card{position:fixed;z-index:302;max-width:360px;width:calc(100% - 24px);
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    box-shadow:0 20px 50px -14px rgba(0,0,0,.6)}
+  .tour-step-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--teal);margin:0 0 6px}
+  .tour-card h2{font-size:16.5px;margin:0 0 8px;letter-spacing:-.01em}
+  .tour-card h2::before{display:none}
+  .tour-card p:not(.tour-step-label){font-size:13.5px;color:var(--ink-soft);margin:0 0 14px;line-height:1.55}
+  .tour-actions{display:flex;gap:8px;flex-wrap:wrap}
+  @media (prefers-reduced-motion: reduce){ .tour-ring{transition:none} }
+
+  /* ---- Command palette (Ctrl/Cmd+K) + keyboard-shortcuts help overlay ----
+     Same centered-dialog a11y pattern as .tour-overlay above: scrim + a
+     focus-trapped role="dialog" panel, closed with Esc, focus restored to
+     whatever had it before opening. */
+  .hint-chip{cursor:pointer;background:var(--card-soft)}
+  .hint-chip:hover{border-color:var(--teal);color:var(--ink)}
+  .cmdk-overlay[hidden]{display:none}
+  .cmdk-overlay{position:fixed;inset:0;z-index:400;display:flex;justify-content:center;
+    align-items:flex-start;padding-top:12vh}
+  .cmdk-scrim{position:fixed;inset:0;background:rgba(0,0,0,.6)}
+  .cmdk-modal{position:relative;z-index:401;width:100%;max-width:560px;margin:0 16px;
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.6);padding:14px;
+    opacity:0;transform:scale(.98);animation:cmdk-in .14s ease-out forwards}
+  @keyframes cmdk-in{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+  @media (prefers-reduced-motion: reduce){ .cmdk-modal{animation:none;opacity:1;transform:none} }
+  .cmdk-input{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);
+    background:var(--card-soft);border:1px solid var(--line);border-radius:9px;padding:11px 13px}
+  .cmdk-list{list-style:none;margin:10px 0 0;padding:0;max-height:360px;overflow:auto}
+  .cmdk-row{display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:9px 11px;border-radius:8px;font-size:13.5px;cursor:pointer;
+    border-left:3px solid transparent;color:var(--ink-soft)}
+  .cmdk-row[aria-selected="true"]{background:var(--teal-soft);border-left-color:var(--teal);color:var(--ink)}
+  .cmdk-row .cmdk-hint{font-family:var(--mono);font-size:11px;color:var(--ink-soft);flex:none;
+    border:1px solid var(--line);border-radius:5px;padding:2px 6px;background:var(--card-soft)}
+  .cmdk-empty-msg{padding:14px 11px;color:var(--ink-soft);font-size:13px}
+  .shortcuts-modal{max-width:420px;padding:20px}
+  .shortcuts-list{display:grid;grid-template-columns:auto 1fr;gap:9px 14px;margin:14px 0 0;font-size:13.5px}
+  .shortcuts-list dt{font-family:var(--mono);color:var(--teal);background:var(--card-soft);
+    border:1px solid var(--line);border-radius:5px;padding:2px 8px;justify-self:start}
+  .shortcuts-list dd{margin:0;color:var(--ink-soft);align-self:center}
+
+  /* ---- Live status ticker (footer strip; real DATA/state only, no marquee) ---- */
+  .status-ticker{margin-top:20px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;
+    background:var(--card-soft);font-family:var(--mono);font-size:12px;color:var(--ink-soft);
+    white-space:nowrap;overflow-x:auto}
+  .status-ticker .ticker-item{display:inline-flex;align-items:center;gap:6px}
+  .status-ticker .ticker-sep{margin:0 12px;color:var(--ink-soft);opacity:.5}
+  .status-ticker .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink-soft);flex:none}
+  .status-ticker .dot.ok{background:var(--ok)}
+  .status-ticker .dot.info{background:var(--teal)}
+
+  /* ---- Evidence magnifier lens (Profile doc viewer; pointer:fine only) ---- */
+  .doc-magnifier{position:absolute;width:160px;height:160px;border-radius:50%;
+    border:2px solid var(--teal);box-shadow:0 10px 28px -8px rgba(0,0,0,.55);
+    pointer-events:none;z-index:20;display:none;background-repeat:no-repeat}
+  @media (pointer:coarse){ .doc-magnifier{display:none !important} }
+
+  /* ---- Stage-entry stagger (direct .card children, on stage SWITCH only) ---- */
+  .stage-card-enter{animation:stage-card-in .2s ease-out both;
+    animation-delay:calc(var(--stagger-i, 0) * 40ms)}
+  @keyframes stage-card-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @media (prefers-reduced-motion: reduce){ .stage-card-enter{animation:none} }
 </style>
 </head>
 <body>
@@ -307,7 +432,9 @@
       <button class="btn ghost" id="theme-toggle" type="button" aria-pressed="false">
         <span aria-hidden="true">◐</span> <span id="theme-toggle-label">Theme: Auto</span>
       </button>
+      <button class="btn ghost" id="btn-acceptance-demo" type="button">▶ Acceptance demo</button>
       <a class="btn ghost" href="realdoor_property_explorer.html">Discover ↗</a>
+      <button class="tag hint-chip" id="cmdk-hint-chip" type="button" title="Open command palette" aria-label="Open command palette (Ctrl or Cmd K)">Ctrl K</button>
     </div>
   </header>
   <p id="household-hint" class="sr-only">Selecting a household reloads the Profile, Understand, and Prepare stages with that household's own documents only.</p>
@@ -379,6 +506,11 @@
               <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 6px">Every correction you confirm here is recorded before it changes any downstream number.</p>
               <div class="audit-log" id="audit-log" aria-live="polite"></div>
             </div>
+            <div class="card" id="change-diff-card" style="margin-top:14px;display:none">
+              <h3>What changed</h3>
+              <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 6px">Only values that changed after your last correction are shown below.</p>
+              <div id="change-diff"></div>
+            </div>
           </div>
           <div class="card" aria-label="Extracted fields for the selected document">
             <h3 id="fields-heading">Extracted fields</h3>
@@ -425,8 +557,15 @@
           <span class="ai-badge" id="explain-badge"></span>
         </div>
         <p style="font-size:13px;color:var(--ink-soft)">An optional local AI server can reword the deterministic
-          numbers above into plain English. It can only rephrase the facts already computed to the left — it
-          never computes a number, picks a threshold, or states a decision itself.</p>
+          numbers above into plain English (or Spanish). It can only rephrase the facts already computed to the
+          left — it never computes a number, picks a threshold, or states a decision itself, in either language.</p>
+        <div class="field-row" style="max-width:220px">
+          <label for="ai-language">Explanation language</label>
+          <select id="ai-language">
+            <option value="en" selected>English</option>
+            <option value="es">Español</option>
+          </select>
+        </div>
         <div class="ai-actions">
           <button class="btn gold" id="btn-explain" type="button" data-ai-action="1" disabled>✨ Explain in plain English (AI)</button>
         </div>
@@ -469,8 +608,10 @@
           <button class="btn" id="btn-preview" type="button">Preview</button>
           <button class="btn" id="btn-edit" type="button">Edit</button>
           <button class="btn gold" id="btn-download" type="button">Download</button>
+          <button class="btn" id="btn-print-packet" type="button">🖨 Print packet</button>
           <button class="btn danger" id="btn-delete" type="button">Delete session</button>
         </div>
+        <p id="packet-print-note" role="status" aria-live="polite" style="font-size:12.5px;color:var(--ink-soft);margin:8px 0 0"></p>
         <div id="preview-wrap" style="display:none;margin-top:14px">
           <h3>Submission preview</h3>
           <pre class="preview" id="preview-json"></pre>
@@ -565,10 +706,51 @@
     </section>
   </main>
 
+  <div class="status-ticker" id="status-ticker" aria-label="Live status summary"></div>
+
   <footer class="app-footer">
     <span>RealDoor — synthetic training fixtures only. See <a href="MODEL_DISCLOSURE.md">MODEL_DISCLOSURE.md</a>.</span>
     <span id="build-stamp"></span>
   </footer>
+</div>
+
+<div id="packet-print-root" aria-hidden="true"></div>
+
+<div class="tour-overlay" id="tour-overlay" hidden>
+  <div class="tour-scrim" id="tour-scrim"></div>
+  <div class="tour-ring" id="tour-ring"></div>
+  <div class="tour-card" id="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title" aria-describedby="tour-body" tabindex="-1">
+    <p class="tour-step-label" id="tour-step-label"></p>
+    <h2 id="tour-title"></h2>
+    <p id="tour-body"></p>
+    <div class="tour-actions">
+      <button class="btn ghost" id="tour-prev" type="button">◀ Prev</button>
+      <button class="btn primary" id="tour-next" type="button">Next ▶</button>
+      <button class="btn" id="tour-exit" type="button">Exit</button>
+    </div>
+  </div>
+</div>
+
+<div class="cmdk-overlay" id="cmdk-overlay" hidden>
+  <div class="cmdk-scrim" id="cmdk-scrim"></div>
+  <div class="cmdk-modal" id="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <input type="text" id="cmdk-input" class="cmdk-input" placeholder="Type a command…"
+      role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list"
+      aria-label="Search commands" autocomplete="off" spellcheck="false">
+    <ul id="cmdk-list" class="cmdk-list" role="listbox" aria-label="Commands"></ul>
+  </div>
+</div>
+
+<div class="cmdk-overlay" id="shortcuts-overlay" hidden>
+  <div class="cmdk-scrim" id="shortcuts-scrim"></div>
+  <div class="cmdk-modal shortcuts-modal" id="shortcuts-modal" role="dialog" aria-modal="true"
+    aria-labelledby="shortcuts-title" tabindex="-1">
+    <h2 id="shortcuts-title" style="margin:0">Keyboard shortcuts</h2>
+    <dl class="shortcuts-list" id="shortcuts-list"></dl>
+    <div class="top-actions" style="margin-top:16px">
+      <button class="btn" id="shortcuts-close" type="button">Close</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -580,6 +762,8 @@ const DATA = {"profiles": {"HH-001": {"household_id": "HH-001", "household_size"
 --------------------------------------------------------------------- */
 const state = {
   householdId: null,
+  aiLanguage: "en",  // "en" | "es" -- which language the optional AI wording is requested in; the
+                     // deterministic numbers/status to the left of every AI card never change with this.
   activeStage: "profile",
   activeDocId: null,
   selectedFieldKey: null,
@@ -588,6 +772,7 @@ const state = {
   sessions: {},      // householdId -> data (null after delete)
   auditLog: {},      // householdId -> [entries]
   customProfiles: {}, // householdId -> profile-shaped object, e.g. the ad hoc "UPLOAD" household
+  changeDiff: {},    // householdId -> { before, after } recomputeHousehold() snapshots from the last confirmed correction
 };
 
 /** Every render function in this app (renderProfile, renderUnderstand,
@@ -676,6 +861,38 @@ function citeChip(rule) {
   return el("span", { class: "tag gold", title: rule.source_locator || "" }, [a]);
 }
 function ruleById(id) { return DATA.rules[id]; }
+
+/** Presentation-only ease-out-cubic count-up: animates `target`'s
+ * textContent from `from` to `to` over `ms` milliseconds via
+ * requestAnimationFrame, using `formatFn` to render every intermediate
+ * frame. The FINAL frame always renders `formatFn(to)` exactly -- the
+ * already-computed value -- so this can never itself become the source of
+ * a displayed number. On prefers-reduced-motion (or a no-op range), it
+ * renders the final value instantly with no animation. */
+function animateNumber(target, from, to, ms, formatFn) {
+  if (!target) return;
+  if (REDUCE_MOTION() || !isFinite(from) || !isFinite(to) || from === to) {
+    target.textContent = formatFn(to);
+    return;
+  }
+  const start = performance.now();
+  function frame(now) {
+    const t = Math.min(1, (now - start) / ms);
+    const eased = 1 - Math.pow(1 - t, 3);
+    if (t >= 1) { target.textContent = formatFn(to); return; }
+    target.textContent = formatFn(from + (to - from) * eased);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/** Previous rendered values per household, so the count-up animations in
+ * renderUnderstand() and renderPacketReadiness() start from the last
+ * shown value on a recompute/re-render instead of always restarting from
+ * zero (per-household, since switching households is a fresh "first
+ * render" for that household's own figures). */
+const understandPrevValues = {}; // householdId -> { total, threshold }
+const ringPrevValues = {}; // householdId -> met (packet-readiness ring)
 
 function editKey(hid, docId, field) { return `${hid}::${docId}::${field}`; }
 
@@ -807,6 +1024,7 @@ function wireStageNav() {
   });
 }
 function setActiveStage(stage) {
+  const prevStage = state.activeStage;
   state.activeStage = stage;
   $all("#stage-nav button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.stage === stage)));
   $all(".stage").forEach((s) => s.classList.remove("active"));
@@ -817,6 +1035,29 @@ function setActiveStage(stage) {
   if (stage === "prepare") renderPrepare();
   if (stage === "safety") renderSafety();
   if (stage === "profile") updateTraceBeam();
+  if (prevStage !== stage) staggerStageCards(target);
+}
+
+/** Subtle staggered fade-up for the newly active stage's direct .card
+ * children -- only on an actual stage SWITCH (see the prevStage !== stage
+ * guard in setActiveStage above), never on same-stage re-renders, so
+ * re-rendering after an edit/recompute doesn't re-trigger it. Capped at
+ * the first 6 cards (any beyond that render instantly, no stagger). */
+function staggerStageCards(target) {
+  if (REDUCE_MOTION()) return;
+  const cards = Array.from(target.children).filter((c) => c.classList.contains("card")).slice(0, 6);
+  cards.forEach((card, i) => {
+    card.classList.remove("stage-card-enter");
+    card.style.setProperty("--stagger-i", String(i));
+    void card.offsetWidth; // force reflow so re-adding the class restarts the animation
+    card.classList.add("stage-card-enter");
+    const onEnd = () => {
+      card.classList.remove("stage-card-enter");
+      card.style.removeProperty("--stagger-i");
+      card.removeEventListener("animationend", onEnd);
+    };
+    card.addEventListener("animationend", onEnd);
+  });
 }
 
 /* ---------------------------------------------------------------------
@@ -852,12 +1093,14 @@ function renderProfile() {
         : "No documents on file for this household.",
     }));
     renderAuditLog();
+    renderChangeDiff();
     updateTraceBeam();
     return;
   }
   renderDocViewport(doc);
   renderFieldList(doc);
   renderAuditLog();
+  renderChangeDiff();
   updateTraceBeam();
 }
 
@@ -891,6 +1134,44 @@ function renderDocViewport(doc) {
     inner.appendChild(box);
   });
   viewport.appendChild(inner);
+  wireDocMagnifier(inner, doc.page_image_data_uri);
+}
+
+/* ---------------------------------------------------------------------
+   Evidence magnifier (Profile doc viewer) -- pure hover enhancement, pure
+   presentation. All field values/confidence/source are already fully
+   available via the field list to their right regardless of pointer type,
+   so this is never required to operate the app -- it's absent entirely
+   (not just visually hidden) on coarse/touch pointers and on documents
+   with no page image, and it never intercepts clicks (pointer-events:none)
+   so the .box source buttons underneath stay clickable while it's shown.
+--------------------------------------------------------------------- */
+const MAGNIFIER_SIZE = 160, MAGNIFIER_ZOOM = 2.2;
+function pointerIsFine() {
+  return !!(window.matchMedia && window.matchMedia("(pointer: fine)").matches);
+}
+function wireDocMagnifier(container, imageDataUri) {
+  if (!imageDataUri || !pointerIsFine()) return;
+  const lens = el("div", { class: "doc-magnifier", "aria-hidden": "true" });
+  lens.style.backgroundImage = `url("${imageDataUri}")`;
+  container.appendChild(lens);
+  const half = MAGNIFIER_SIZE / 2;
+  const move = (ev) => {
+    if (!pointerIsFine()) { lens.style.display = "none"; return; }
+    const rect = container.getBoundingClientRect();
+    const x = ev.clientX - rect.left, y = ev.clientY - rect.top;
+    if (x < 0 || y < 0 || x > rect.width || y > rect.height || rect.width === 0 || rect.height === 0) {
+      lens.style.display = "none";
+      return;
+    }
+    lens.style.display = "block";
+    lens.style.left = (x - half) + "px";
+    lens.style.top = (y - half) + "px";
+    lens.style.backgroundSize = `${rect.width * MAGNIFIER_ZOOM}px ${rect.height * MAGNIFIER_ZOOM}px`;
+    lens.style.backgroundPosition = `${-(x * MAGNIFIER_ZOOM - half)}px ${-(y * MAGNIFIER_ZOOM - half)}px`;
+  };
+  container.addEventListener("mousemove", move);
+  container.addEventListener("mouseleave", () => { lens.style.display = "none"; });
 }
 
 function renderFieldList(doc) {
@@ -950,6 +1231,7 @@ function confirmEdit(doc, field, input) {
   if (String(newValue) === String(oldValue)) return;
   const ok = window.confirm(`Confirm correction:\n${field.field} = ${oldValue} → ${newValue}\n\nThis will be logged and will recompute the income comparison.`);
   if (!ok) { input.value = String(oldValue); return; }
+  const before = recomputeHousehold(hid);
   state.edits[hid] = state.edits[hid] || {};
   state.edits[hid][key] = newValue;
   state.auditLog[hid] = state.auditLog[hid] || [];
@@ -961,8 +1243,98 @@ function confirmEdit(doc, field, input) {
     from: oldValue,
     to: newValue,
   });
-  announce(`${field.field.replace(/_/g, " ")} updated to ${newValue}. Recomputing annualized income.`);
+  const after = recomputeHousehold(hid);
+  state.changeDiff[hid] = { before, after };
+  announce(`${field.field.replace(/_/g, " ")} updated to ${newValue}. Recomputing annualized income. ${describeChangeDiffSummary(before, after)}`);
   renderAll();
+}
+
+/** Rows for the "What changed" diff card -- only the values that actually
+ * differ between the before/after recomputeHousehold() snapshots captured
+ * around a single confirmed correction in confirmEdit(). Deliberately never
+ * includes readiness_status: recomputeHousehold() only mirrors the
+ * annualize/compare math, not the server's full reason-code engine, so a
+ * readiness change can't be honestly re-derived client-side. */
+function describeChangeDiffRows(before, after) {
+  const rows = [];
+  if (before.total !== after.total) {
+    const delta = Math.round((after.total - before.total) * 100) / 100;
+    rows.push({
+      kind: "income",
+      label: "Annualized income",
+      from: money(before.total), to: money(after.total),
+      arrow: delta > 0 ? "▲" : (delta < 0 ? "▼" : "→"),
+      direction: delta > 0 ? "increased" : (delta < 0 ? "decreased" : "unchanged"),
+      deltaAbs: money(Math.abs(delta)),
+    });
+  }
+  if (before.comparison !== after.comparison) {
+    rows.push({
+      kind: "comparison",
+      label: "Comparison to frozen threshold",
+      from: before.comparison, to: after.comparison,
+      threshold: after.threshold,
+    });
+  }
+  return rows;
+}
+
+function describeChangeDiffSummary(before, after) {
+  const rows = describeChangeDiffRows(before, after);
+  if (!rows.length) return "No downstream values changed.";
+  const parts = rows.map((r) => r.kind === "income"
+    ? `${r.label} ${r.direction} from ${r.from} to ${r.to}`
+    : `${r.label} changed from ${r.from} to ${r.to}`);
+  if (before.comparison !== after.comparison) parts.push("this correction moved the total across the frozen threshold");
+  return "What changed: " + parts.join("; ") + ".";
+}
+
+/** Renders the "What changed" card for the current household from
+ * state.changeDiff[hid] (set only by confirmEdit()) -- shows nothing until
+ * the first correction is confirmed for this household, and replaces its
+ * content on every subsequent correction. */
+function renderChangeDiff() {
+  const hid = state.householdId;
+  const card = $("#change-diff-card");
+  const container = $("#change-diff");
+  if (!card || !container) return;
+  const diff = state.changeDiff[hid];
+  if (!diff) { card.style.display = "none"; container.innerHTML = ""; return; }
+  card.style.display = "block";
+  container.innerHTML = "";
+  const { before, after } = diff;
+  const rows = describeChangeDiffRows(before, after);
+  if (!rows.length) {
+    container.appendChild(el("p", { style: "font-size:13px;color:var(--ink-soft);margin:0", text: "No downstream values changed." }));
+  } else {
+    rows.forEach((r) => {
+      if (r.kind === "income") {
+        container.appendChild(el("div", { class: "math-row" }, [
+          el("span", { class: "k", text: r.label }),
+          el("span", { class: "v" }, [
+            document.createTextNode(`${r.from} → ${r.to} `),
+            el("span", { "aria-hidden": "true", text: r.arrow }),
+            document.createTextNode(` ${r.direction} by ${r.deltaAbs}`),
+          ]),
+        ]));
+      } else {
+        container.appendChild(el("div", { class: "math-row" }, [
+          el("span", { class: "k", text: r.label }),
+          el("span", { class: "v", text: `${r.from} → ${r.to}` }),
+        ]));
+        container.appendChild(el("p", { style: "font-size:12px;color:var(--ink-soft);margin:2px 0 8px", text: `Frozen threshold for context: ${r.threshold != null ? money(r.threshold) : "no table row for this household size"}` }));
+      }
+    });
+    if (before.comparison !== after.comparison) {
+      container.appendChild(el("p", { style: "font-weight:700;font-size:13px;margin-top:4px;color:var(--warn)" }, [
+        el("span", { "aria-hidden": "true", text: "⚠ " }),
+        document.createTextNode("This correction moved the total across the frozen threshold — the comparison changed."),
+      ]));
+    }
+  }
+  const citeStrip = el("div", { class: "cite-strip" });
+  [ruleById("CH-INCOME-001"), ruleById(DATA.thresholds.rule_id)].forEach((r) => citeStrip.appendChild(citeChip(r)));
+  container.appendChild(citeStrip);
 }
 
 function renderAuditLog() {
@@ -1318,20 +1690,26 @@ function renderUnderstand() {
   const primaryIncomeField = findPrimaryIncomeField(hid);
   rows.forEach(([k, v]) => {
     const row = el("div", { class: "math-row" }, [el("span", { class: "k", text: k })]);
+    let valueEl;
     if (primaryIncomeField && (k === "Annualized income" || k === "Wage base + frequency")) {
+      const btn = el("button", {
+        class: "math-source-btn", type: "button",
+        "aria-label": "Show this figure's source document box",
+        title: "Jump to the source document box for this figure",
+        onclick: () => jumpToIncomeSource(hid),
+        text: String(v),
+      });
+      valueEl = btn;
       row.appendChild(el("span", { class: "v" }, [
-        el("button", {
-          class: "math-source-btn", type: "button",
-          "aria-label": "Show this figure's source document box",
-          title: "Jump to the source document box for this figure",
-          onclick: () => jumpToIncomeSource(hid),
-          text: String(v),
-        }),
+        btn,
         el("span", { "aria-hidden": "true", style: "margin-left:4px;color:var(--ink-soft);font-family:var(--sans);font-weight:400", text: "🔎" }),
       ]));
     } else {
-      row.appendChild(el("span", { class: "v", text: String(v) }));
+      valueEl = el("span", { class: "v", text: String(v) });
+      row.appendChild(valueEl);
     }
+    if (k === "Annualized income") valueEl.id = "math-val-income";
+    if (k === "Frozen 60% threshold") valueEl.id = "math-val-threshold";
     panel.appendChild(row);
   });
   if (rec.conflict) {
@@ -1339,6 +1717,18 @@ function renderUnderstand() {
   }
   [incomeRule, threshRule, readinessRule].forEach((r) => citeStrip.appendChild(citeChip(r)));
   citeStrip.appendChild(el("span", { class: "tag", text: DATA.thresholds.source_locator }));
+
+  // Count-up animation, presentation only -- the DOM above already holds
+  // the final money()-formatted text; this just animates toward it, from
+  // this household's previously shown value (or 0 on its first render).
+  const prevVals = understandPrevValues[hid] || {};
+  if (rec.total != null) {
+    animateNumber($("#math-val-income"), prevVals.total != null ? prevVals.total : 0, rec.total, 600, money);
+  }
+  if (rec.threshold != null) {
+    animateNumber($("#math-val-threshold"), prevVals.threshold != null ? prevVals.threshold : 0, rec.threshold, 600, money);
+  }
+  understandPrevValues[hid] = { total: rec.total, threshold: rec.threshold };
 
   populateQaPresets();
 }
@@ -1505,6 +1895,7 @@ function renderPacketReadiness(profile) {
   const numText = document.createElementNS(svgNS, "text");
   numText.setAttribute("x", "70"); numText.setAttribute("y", "66"); numText.setAttribute("text-anchor", "middle");
   numText.setAttribute("font-size", "24"); numText.setAttribute("class", "ring-center-num");
+  numText.setAttribute("id", "ring-count-text");
   numText.textContent = `${met} / ${total}`;
   svg.appendChild(numText);
 
@@ -1523,6 +1914,14 @@ function renderPacketReadiness(profile) {
   });
 
   card.appendChild(el("div", { class: "ring-wrap" }, [svg, list]));
+
+  // Count-up the ring's center "N / total" -- from this household's
+  // previous met-count (or 0 on its first render); FINAL text is always
+  // exactly `${met} / ${total}` already set above, this only animates
+  // toward it.
+  const prevMet = ringPrevValues[state.householdId];
+  animateNumber(numText, prevMet != null ? prevMet : 0, met, 600, (v) => `${Math.round(v)} / ${total}`);
+  ringPrevValues[state.householdId] = met;
 
   const isReady = profile.readiness_status === "READY_TO_REVIEW";
   card.appendChild(el("div", { class: "status-badge " + (isReady ? "ready" : "needs"), style: "margin-top:12px" }, [
@@ -1552,11 +1951,17 @@ function renderPrepare() {
   if (!profile) {
     badge.appendChild(el("p", { text: "Session deleted. Select the household again to start a new session." }));
     $("#btn-preview").disabled = true; $("#btn-download").disabled = true; $("#btn-delete").disabled = true;
+    $("#btn-print-packet").disabled = true;
+    $("#packet-print-note").textContent = "Session deleted — nothing to print.";
     $("#coach-card").style.display = "none";
     return;
   }
   const notEvaluated = isUploadNotEvaluated(hid, profile);
   $("#btn-preview").disabled = notEvaluated; $("#btn-download").disabled = notEvaluated; $("#btn-delete").disabled = false;
+  $("#btn-print-packet").disabled = notEvaluated;
+  $("#packet-print-note").textContent = notEvaluated
+    ? "Not yet evaluated — upload documents and click \"Evaluate readiness\" on the Profile stage before printing a packet."
+    : "";
   $("#coach-card").style.display = (!notEvaluated && profile.readiness_status === "NEEDS_REVIEW") ? "block" : "none";
 
   if (notEvaluated) {
@@ -1588,13 +1993,26 @@ function renderPrepare() {
     });
   }
 
+  computeChecklistRows(profile).forEach((r) => {
+    checklist.appendChild(checklistRow(r.type, r.statusClass, r.icon, r.detail));
+  });
+
+  wirePrepareButtons(profile);
+}
+
+/** Same document-checklist semantics rendered by renderPrepare's checklist
+ * (present / flagged / informational-note / missing), extracted so the
+ * printable packet (buildPacketHtml()) can reuse the exact same rows
+ * instead of recomputing this logic a second time. */
+function computeChecklistRows(profile) {
   const presentTypes = new Set(profile.documents.map((d) => d.document_type));
   const allTypes = Object.keys(REQUIRED_DOC_LABELS);
+  const rows = [];
   allTypes.forEach((type) => {
     if (!presentTypes.has(type) && type !== "gig_income_corroboration" && !profile.documents.some(d=>d.document_type==="gig_statement") && type==="gig_income_corroboration") return;
     if (!presentTypes.has(type)) {
       if (type === "employment_letter" && (profile.notes.length || presentTypes.has("pay_stub"))) {
-        checklist.appendChild(checklistRow(type, "missing-note", "🛈", "not provided — informational note only, wage evidenced elsewhere"));
+        rows.push({ type, statusClass: "missing-note", icon: "🛈", detail: "not provided — informational note only, wage evidenced elsewhere" });
       }
       return;
     }
@@ -1604,14 +2022,13 @@ function renderPrepare() {
     if (profile.reasons.includes("EMPLOYMENT_LETTER_EXPIRED") && type === "employment_letter") flags.push("expired (>60d)");
     if (profile.reasons.includes("BENEFIT_LETTER_EXPIRED") && type === "benefit_letter") flags.push("expired (>60d)");
     if (profile.reasons.includes("GIG_INCOME_UNCORROBORATED") && type === "gig_statement") flags.push("uncorroborated");
-    if (flags.length) checklist.appendChild(checklistRow(type, "flagged", "⚠", `${doc.document_id} — ${flags.join(", ")}`));
-    else checklist.appendChild(checklistRow(type, "present", "✓", `${doc.document_id} — present, current, reconciled`));
+    if (flags.length) rows.push({ type, statusClass: "flagged", icon: "⚠", detail: `${doc.document_id} — ${flags.join(", ")}` });
+    else rows.push({ type, statusClass: "present", icon: "✓", detail: `${doc.document_id} — present, current, reconciled` });
   });
   if (profile.documents.some(d=>d.document_type==="gig_statement")) {
-    checklist.appendChild(checklistRow("gig_income_corroboration", "missing-block", "✗", "no independent corroboration document on file"));
+    rows.push({ type: "gig_income_corroboration", statusClass: "missing-block", icon: "✗", detail: "no independent corroboration document on file" });
   }
-
-  wirePrepareButtons(profile);
+  return rows;
 }
 
 function checklistRow(type, statusClass, icon, detail) {
@@ -1634,6 +2051,123 @@ function buildSubmission(hid) {
   };
 }
 
+/** Escapes text for safe interpolation into the packet's innerHTML string
+ * (buildPacketHtml() below builds markup via template literals rather than
+ * el()/appendChild, since the packet is a whole printable document). */
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+/** Builds the human-readable, printable packet's markup for `hid`, entirely
+ * from getProfile()/recomputeHousehold()/computeChecklistRows()/REASON_TEXT/
+ * ruleById() — the same helpers and the same live recompute buildSubmission()
+ * uses — so every figure here is identical to what's already shown on the
+ * Prepare stage. Nothing here is computed independently or invented. */
+function buildPacketHtml(hid) {
+  const profile = getProfile(hid);
+  const rec = recomputeHousehold(hid);
+  const genDate = new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+
+  const reasonsHtml = (profile.reasons || []).map((r) =>
+    `<p class="packet-reason packet-warn">⚠ ${escapeHtml(r.replace(/_/g, " "))}: ${escapeHtml(REASON_TEXT[r] || "See documentation for this reason code.")}</p>`
+  ).join("");
+  const notesHtml = (profile.notes || []).map((n) => `<p class="packet-reason">🛈 ${escapeHtml(n)}</p>`).join("");
+  const reasonsAndNotes = (reasonsHtml + notesHtml) || "<p class=\"packet-reason\">No reasons or notes on file.</p>";
+
+  const incomeRows = (profile.income_components || []).map((c) => `
+    <tr>
+      <td>${escapeHtml(c.source_document_id)}</td>
+      <td>${escapeHtml(REQUIRED_DOC_LABELS[c.document_type] || c.document_type)}</td>
+      <td>${escapeHtml(c.basis)}</td>
+      <td>${money(c.amount)}</td>
+      <td>${escapeHtml(c.frequency)}</td>
+      <td>${money(c.annualized)}</td>
+    </tr>`).join("") || `<tr><td colspan="6">No income components on file.</td></tr>`;
+
+  const checklistRows = computeChecklistRows(profile).map((r) => `
+    <tr>
+      <td>${escapeHtml(REQUIRED_DOC_LABELS[r.type] || r.type)}</td>
+      <td>${escapeHtml(r.icon)} ${escapeHtml(r.statusClass.replace("-", " "))}</td>
+      <td>${escapeHtml(r.detail)}</td>
+    </tr>`).join("") || `<tr><td colspan="3">No checklist rows.</td></tr>`;
+
+  const auditEntries = state.auditLog[hid] || [];
+  const auditHtml = auditEntries.length
+    ? auditEntries.map((e) => `<p class="packet-reason">${escapeHtml(e.ts)} — ${escapeHtml(e.field)}: ${escapeHtml(String(e.from))} → ${escapeHtml(String(e.to))}</p>`).join("")
+    : "<p class=\"packet-reason\">No corrections were made.</p>";
+
+  const citeRules = [ruleById("CH-INCOME-001"), ruleById("CH-READINESS-001"), ruleById(DATA.thresholds.rule_id)]
+    .concat((profile.citations || []).map((c) => ruleById(c.rule_id)));
+  const seenRuleIds = new Set();
+  const citeHtml = citeRules.filter((r) => r && !seenRuleIds.has(r.rule_id) && seenRuleIds.add(r.rule_id))
+    .map((r) => `<p class="packet-reason">${escapeHtml(r.rule_id)} — ${escapeHtml(r.source_locator || "n/a")} — ${escapeHtml(r.effective_date || "n/a")} — ${escapeHtml(r.source_url || "n/a")}</p>`)
+    .join("") || "<p class=\"packet-reason\">No rule citations on file.</p>";
+
+  return `
+    <div class="packet">
+      <h1>RealDoor — Application-Readiness Packet</h1>
+      <p>Household: <strong>${escapeHtml(hid)}</strong> &nbsp;·&nbsp; Generated: ${escapeHtml(genDate)}</p>
+      <p class="packet-disclaimer">Prepared by the renter for review by a program reviewer. This packet reports document readiness and a numerical comparison only — it is not a program determination.</p>
+
+      <h2>Readiness</h2>
+      <p><strong>${escapeHtml((profile.readiness_status || "").replace(/_/g, " "))}</strong></p>
+      ${reasonsAndNotes}
+
+      <h2>Income</h2>
+      <table>
+        <thead><tr><th>Source document</th><th>Document type</th><th>Basis</th><th>Amount</th><th>Frequency</th><th>Annualized</th></tr></thead>
+        <tbody>${incomeRows}</tbody>
+      </table>
+      <p>Annualized total: <strong>${money(rec.total)}</strong></p>
+      <p>Frozen 60% threshold: <strong>${rec.threshold != null ? money(rec.threshold) : "no table row for this household size"}</strong> (effective ${escapeHtml(DATA.thresholds.effective_date)}, ${escapeHtml(DATA.thresholds.source_locator)})</p>
+      <p>Comparison: <strong>${escapeHtml(rec.comparison)}</strong></p>
+
+      <h2>Document checklist</h2>
+      <table>
+        <thead><tr><th>Document</th><th>Status</th><th>Detail</th></tr></thead>
+        <tbody>${checklistRows}</tbody>
+      </table>
+
+      <h2>Corrections log</h2>
+      ${auditHtml}
+
+      <h2>Citations</h2>
+      ${citeHtml}
+
+      <div class="packet-sig">
+        <div>Renter signature / date</div>
+        <div>Program reviewer signature / date</div>
+      </div>
+
+      <div class="packet-footer">Synthetic training data only. Generated by RealDoor.</div>
+    </div>
+  `;
+}
+
+/** Populates #packet-print-root from buildPacketHtml(), toggles the
+ * "printing-packet" body class (which the @media print rules use to hide
+ * everything else and show only the packet — see the CSS above), and opens
+ * the browser's native print dialog. The class is removed again on
+ * `afterprint` (with a generous timed fallback for browsers that don't fire
+ * it) so the SPA's normal on-screen state is never permanently altered. */
+function printPacket(hid) {
+  const profile = getProfile(hid);
+  if (!profile || isUploadNotEvaluated(hid, profile)) return;
+  const root = $("#packet-print-root");
+  root.innerHTML = buildPacketHtml(hid);
+  document.body.classList.add("printing-packet");
+  let cleaned = false;
+  const cleanup = () => {
+    if (cleaned) return;
+    cleaned = true;
+    document.body.classList.remove("printing-packet");
+    window.removeEventListener("afterprint", cleanup);
+  };
+  window.addEventListener("afterprint", cleanup);
+  window.print();
+  window.setTimeout(cleanup, 5000);
+}
+
 function wirePrepareButtons() {
   const hid = state.householdId;
   $("#btn-preview").onclick = () => {
@@ -1650,6 +2184,7 @@ function wirePrepareButtons() {
     document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(url);
   };
+  $("#btn-print-packet").onclick = () => printPacket(hid);
   $("#btn-delete").onclick = () => {
     const ok = window.confirm(`Delete the in-page session for ${hid}? This zeroizes locally held data; a follow-up read will return nothing.`);
     if (!ok) return;
@@ -1923,6 +2458,433 @@ function wireTheme() {
 }
 
 /* ---------------------------------------------------------------------
+   Guided acceptance demo — a real, accessible coach-mark tour over the
+   ACTUAL running app. Every step's `run()` calls the same functions a
+   judge's own clicks would call (selectHousehold, setActiveStage, the
+   real #qa-ask/#firewall-send button clicks); the tour only ever adds a
+   highlight ring + narration card on top, and never fabricates a result
+   or mutates a field value itself ("point, don't touch").
+--------------------------------------------------------------------- */
+/** Locates the pay_frequency field's <input> in the real field list for
+ * the current household, switching the active document tab to whichever
+ * document has that field first — the same state change a real click on
+ * that document tab performs (see the doc-tab button's onclick above). */
+function tourPayFrequencyInput() {
+  const hid = state.householdId;
+  const profile = getProfile(hid);
+  if (!profile) return null;
+  const doc = profile.documents.find((d) => d.fields.some((f) => f.field === "pay_frequency"));
+  if (!doc) return null;
+  if (state.activeDocId !== doc.document_id) {
+    state.activeDocId = doc.document_id;
+    state.selectedFieldKey = null;
+    renderProfile();
+  }
+  const key = editKey(hid, doc.document_id, "pay_frequency");
+  const item = document.getElementById("fitem-" + key);
+  return item ? (item.querySelector("input") || item) : null;
+}
+
+const TOUR_STEPS = [
+  {
+    title: "Profile — grounded extraction",
+    body: "Real extraction from the synthetic PDF — every field carries a source box and confidence.",
+    run: () => { selectHousehold("HH-001"); setActiveStage("profile"); },
+    targets: () => [$("#doc-viewport"), $("#field-list")].filter(Boolean),
+  },
+  {
+    title: "Correction — every downstream number recomputes",
+    body: "Edit a value here and every downstream number recomputes — try changing pay frequency after the tour.",
+    run: () => { setActiveStage("profile"); tourPayFrequencyInput(); },
+    targets: () => { const t = tourPayFrequencyInput(); return t ? [t] : [$("#field-list")]; },
+  },
+  {
+    title: "Understand — cited Q&A",
+    body: "No answer without a citation.",
+    run: () => {
+      setActiveStage("understand");
+      const input = $("#qa-input");
+      if (input) input.value = "What is the frozen 60% threshold for this household?";
+      const ask = $("#qa-ask");
+      if (ask) ask.click();
+    },
+    targets: () => [$("#qa-answer")].filter(Boolean),
+  },
+  {
+    title: "Deterministic math",
+    body: "Annualize → compare to the frozen threshold, stamped with rule id and effective date.",
+    run: () => { setActiveStage("understand"); },
+    targets: () => [$("#math-panel"), $("#math-citations")].filter(Boolean),
+  },
+  {
+    title: "Prepare — readiness, checklist, and the packet",
+    body: "Missing/expired items are flagged with reasons; the renter previews, downloads, deletes.",
+    run: () => { setActiveStage("prepare"); },
+    targets: () => [$("#readiness-badge"), $("#checklist"), $("#btn-preview"), $("#btn-download"), $("#btn-print-packet"), $("#btn-delete")].filter(Boolean),
+  },
+  {
+    title: "Safety — refused before any model is called",
+    body: "Decision-seeking questions are refused before any model is called.",
+    run: () => {
+      // Uses whichever text is already in #firewall-input -- by default the
+      // page's own prefilled prompt (see the firewall-input element's HTML
+      // `value` attribute) -- and just clicks the real Send button, exactly
+      // as a judge's own click would.
+      const send = $("#firewall-send");
+      setActiveStage("safety");
+      if (send) send.click();
+    },
+    targets: () => [$("#firewall-result"), $("#adversarial-table")].filter(Boolean),
+  },
+];
+
+const tourState = { active: false, index: 0, lastFocus: null };
+
+function tourUnionRect(elements) {
+  if (!elements.length) return null;
+  let top = Infinity, left = Infinity, right = -Infinity, bottom = -Infinity;
+  elements.forEach((node) => {
+    const r = node.getBoundingClientRect();
+    if (r.width === 0 && r.height === 0) return;
+    top = Math.min(top, r.top); left = Math.min(left, r.left);
+    right = Math.max(right, r.right); bottom = Math.max(bottom, r.bottom);
+  });
+  if (!isFinite(top)) return null;
+  return { top, left, right, bottom, width: right - left, height: bottom - top };
+}
+
+function tourPositionElements() {
+  if (!tourState.active) return;
+  const step = TOUR_STEPS[tourState.index];
+  const rect = tourUnionRect(step.targets());
+  const ring = $("#tour-ring");
+  const card = $("#tour-card");
+  const pad = 6;
+  if (!rect) {
+    ring.style.display = "none";
+  } else {
+    ring.style.display = "block";
+    ring.style.top = Math.max(0, rect.top - pad) + "px";
+    ring.style.left = Math.max(0, rect.left - pad) + "px";
+    ring.style.width = (rect.width + pad * 2) + "px";
+    ring.style.height = (rect.height + pad * 2) + "px";
+  }
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const cardRect = card.getBoundingClientRect();
+  let top, left;
+  if (rect) {
+    left = Math.min(Math.max(rect.left, 12), Math.max(12, vw - cardRect.width - 12));
+    top = rect.bottom + 16;
+    if (top + cardRect.height > vh - 12) top = Math.max(12, rect.top - cardRect.height - 16);
+  } else {
+    left = vw / 2 - cardRect.width / 2;
+    top = vh / 2 - cardRect.height / 2;
+  }
+  card.style.left = Math.max(12, left) + "px";
+  card.style.top = Math.max(12, top) + "px";
+}
+
+function tourShowStep(i) {
+  tourState.index = i;
+  const step = TOUR_STEPS[i];
+  if (step.run) step.run();
+  const targets = step.targets();
+  if (targets.length) targets[0].scrollIntoView({ block: "center", behavior: "auto" });
+  $("#tour-step-label").textContent = `Step ${i + 1} of ${TOUR_STEPS.length}`;
+  $("#tour-title").textContent = step.title;
+  $("#tour-body").textContent = step.body;
+  $("#tour-prev").disabled = i === 0;
+  $("#tour-next").textContent = i === TOUR_STEPS.length - 1 ? "Finish" : "Next ▶";
+  tourPositionElements();
+  announce(`Acceptance demo step ${i + 1} of ${TOUR_STEPS.length}: ${step.title}.`);
+}
+
+function tourFocusables() {
+  return $all("#tour-card button").filter((b) => !b.disabled);
+}
+
+function tourKeyHandler(ev) {
+  if (!tourState.active) return;
+  if (ev.key === "Escape") { ev.preventDefault(); tourClose(); return; }
+  if (ev.key === "ArrowRight") { ev.preventDefault(); tourNext(); return; }
+  if (ev.key === "ArrowLeft") { ev.preventDefault(); tourPrev(); return; }
+  if (ev.key === "Tab") {
+    const focusables = tourFocusables();
+    if (!focusables.length) return;
+    const first = focusables[0], last = focusables[focusables.length - 1];
+    if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+    else if (!focusables.includes(document.activeElement)) { ev.preventDefault(); first.focus(); }
+  }
+}
+
+function tourNext() {
+  if (tourState.index >= TOUR_STEPS.length - 1) { tourClose(); return; }
+  tourShowStep(tourState.index + 1);
+}
+function tourPrev() {
+  if (tourState.index <= 0) return;
+  tourShowStep(tourState.index - 1);
+}
+
+function tourOpen() {
+  tourState.active = true;
+  tourState.lastFocus = document.activeElement;
+  $("#tour-overlay").hidden = false;
+  document.addEventListener("keydown", tourKeyHandler, true);
+  window.addEventListener("resize", tourPositionElements);
+  tourShowStep(0);
+  $("#tour-card").focus();
+}
+
+function tourClose() {
+  tourState.active = false;
+  $("#tour-overlay").hidden = true;
+  document.removeEventListener("keydown", tourKeyHandler, true);
+  window.removeEventListener("resize", tourPositionElements);
+  if (tourState.lastFocus && typeof tourState.lastFocus.focus === "function") tourState.lastFocus.focus();
+  announce("Acceptance demo closed.");
+}
+
+function wireTour() {
+  $("#btn-acceptance-demo").addEventListener("click", tourOpen);
+  $("#tour-next").addEventListener("click", tourNext);
+  $("#tour-prev").addEventListener("click", tourPrev);
+  $("#tour-exit").addEventListener("click", tourClose);
+}
+
+/* ---------------------------------------------------------------------
+   Command palette (Ctrl/Cmd+K) + keyboard shortcuts help overlay.
+   Every command below calls a REAL existing function (setActiveStage,
+   selectHousehold, tourOpen, or a real element's .click()) -- the palette
+   never re-implements any of that logic itself, it only dispatches to it.
+--------------------------------------------------------------------- */
+const IS_MAC = /Mac|iPod|iPhone|iPad/.test(navigator.platform || navigator.userAgent || "");
+const cmdk = { open: false, items: [], activeIndex: 0, lastFocus: null };
+
+function isTypingTarget(node) {
+  if (!node) return false;
+  const tag = (node.tagName || "").toLowerCase();
+  return tag === "input" || tag === "textarea" || tag === "select" || node.isContentEditable;
+}
+
+function shortcutsIsOpen() {
+  const overlay = document.getElementById("shortcuts-overlay");
+  return !!(overlay && !overlay.hidden);
+}
+
+/** Builds the palette's command list fresh every open/keystroke (cheap,
+ * and always reflects the current DATA/DOM -- e.g. whether #btn-redteam
+ * is currently enabled). Filtering is a case-insensitive substring match
+ * on `label`, applied by cmdkRender(). */
+function buildCommandList() {
+  const items = [];
+  items.push({ label: "Go to Profile", hint: "1", run: () => setActiveStage("profile") });
+  items.push({ label: "Go to Understand", hint: "2", run: () => setActiveStage("understand") });
+  items.push({ label: "Go to Prepare", hint: "3", run: () => setActiveStage("prepare") });
+  items.push({ label: "Go to Safety strip", hint: "4", run: () => setActiveStage("safety") });
+  Object.keys(DATA.profiles).sort().forEach((hid) => {
+    items.push({
+      label: `Switch to household ${hid}`, hint: "",
+      run: () => { $("#household-select").value = hid; selectHousehold(hid); },
+    });
+  });
+  items.push({
+    label: "Switch to household My upload", hint: "",
+    run: () => { $("#household-select").value = "UPLOAD"; selectHousehold("UPLOAD"); },
+  });
+  items.push({ label: "▶ Run acceptance demo", hint: "", run: () => tourOpen() });
+  items.push({ label: "Toggle theme", hint: "", run: () => $("#theme-toggle").click() });
+  items.push({ label: "Print packet", hint: "", run: () => $("#btn-print-packet").click() });
+  items.push({ label: "Download submission JSON", hint: "", run: () => $("#btn-download").click() });
+  items.push({
+    label: "Ask a rules question", hint: "",
+    run: () => { setActiveStage("understand"); const input = $("#qa-input"); if (input) input.focus(); },
+  });
+  items.push({
+    label: "Red-team the AI", hint: "",
+    run: () => {
+      setActiveStage("safety");
+      const btn = $("#btn-redteam");
+      if (btn && !btn.disabled) btn.click();
+    },
+  });
+  return items;
+}
+
+function cmdkHighlight() {
+  $all("#cmdk-list .cmdk-row").forEach((row, i) => row.setAttribute("aria-selected", String(i === cmdk.activeIndex)));
+  const active = document.getElementById("cmdk-item-" + cmdk.activeIndex);
+  const input = $("#cmdk-input");
+  if (active) {
+    input.setAttribute("aria-activedescendant", active.id);
+    active.scrollIntoView({ block: "nearest" });
+  } else {
+    input.removeAttribute("aria-activedescendant");
+  }
+}
+
+function cmdkRender(query) {
+  const list = $("#cmdk-list");
+  list.innerHTML = "";
+  const q = (query || "").toLowerCase();
+  cmdk.items = buildCommandList().filter((c) => c.label.toLowerCase().includes(q));
+  if (!cmdk.items.length) {
+    list.appendChild(el("li", { class: "cmdk-empty-msg", text: "No matching commands." }));
+    $("#cmdk-input").removeAttribute("aria-activedescendant");
+    return;
+  }
+  cmdk.activeIndex = Math.min(cmdk.activeIndex, cmdk.items.length - 1);
+  cmdk.items.forEach((item, i) => {
+    const row = el("li", {
+      id: "cmdk-item-" + i, class: "cmdk-row", role: "option",
+      onclick: () => cmdkRun(i),
+      onmouseenter: () => { cmdk.activeIndex = i; cmdkHighlight(); },
+    }, [el("span", { text: item.label })]);
+    if (item.hint) row.appendChild(el("span", { class: "cmdk-hint", text: item.hint }));
+    list.appendChild(row);
+  });
+  cmdkHighlight();
+}
+
+function cmdkRun(i) {
+  const item = cmdk.items[i];
+  if (!item) return;
+  cmdkClose();
+  item.run();
+}
+
+function cmdkOpen() {
+  if (cmdk.open) return;
+  cmdk.open = true;
+  cmdk.lastFocus = document.activeElement;
+  cmdk.activeIndex = 0;
+  $("#cmdk-overlay").hidden = false;
+  const input = $("#cmdk-input");
+  input.value = "";
+  cmdkRender("");
+  input.focus();
+}
+
+function cmdkClose() {
+  if (!cmdk.open) return;
+  cmdk.open = false;
+  $("#cmdk-overlay").hidden = true;
+  if (cmdk.lastFocus && typeof cmdk.lastFocus.focus === "function") cmdk.lastFocus.focus();
+}
+
+/** Palette-only keys (arrow nav / Enter / focus-trap Tab); Ctrl/Cmd+K and
+ * Esc are handled centrally in wireGlobalShortcuts() so every dialog's
+ * open/close key can't fight another handler for the same keystroke. */
+function cmdkKeyHandler(ev) {
+  if (!cmdk.open) return;
+  if (ev.key === "ArrowDown") { ev.preventDefault(); cmdk.activeIndex = Math.min(cmdk.activeIndex + 1, cmdk.items.length - 1); cmdkHighlight(); return; }
+  if (ev.key === "ArrowUp") { ev.preventDefault(); cmdk.activeIndex = Math.max(cmdk.activeIndex - 1, 0); cmdkHighlight(); return; }
+  if (ev.key === "Enter") { ev.preventDefault(); cmdkRun(cmdk.activeIndex); return; }
+  if (ev.key === "Tab") { ev.preventDefault(); $("#cmdk-input").focus(); }
+}
+
+function wireCommandPalette() {
+  $("#cmdk-input").addEventListener("input", (ev) => { cmdk.activeIndex = 0; cmdkRender(ev.target.value); });
+  $("#cmdk-input").addEventListener("keydown", cmdkKeyHandler);
+  $("#cmdk-scrim").addEventListener("click", cmdkClose);
+  const chip = $("#cmdk-hint-chip");
+  if (chip) {
+    chip.textContent = IS_MAC ? "⌘K" : "Ctrl K";
+    chip.addEventListener("click", cmdkOpen);
+  }
+}
+
+function populateShortcutsList() {
+  const dl = $("#shortcuts-list");
+  if (!dl) return;
+  dl.innerHTML = "";
+  const rows = [
+    [IS_MAC ? "⌘K" : "Ctrl K", "Open the command palette"],
+    ["/", "Open the command palette (outside a text field)"],
+    ["1 – 4", "Go to Profile / Understand / Prepare / Safety strip"],
+    ["?", "Show this keyboard-shortcuts help"],
+    ["Esc", "Close the command palette, this help, or the acceptance demo"],
+  ];
+  rows.forEach(([k, v]) => {
+    dl.appendChild(el("dt", { text: k }));
+    dl.appendChild(el("dd", { text: v }));
+  });
+}
+
+function shortcutsFocusables() {
+  return $all("#shortcuts-modal button").filter((b) => !b.disabled);
+}
+
+function shortcutsKeyHandler(ev) {
+  if (!shortcutsIsOpen()) return;
+  if (ev.key === "Tab") {
+    const focusables = shortcutsFocusables();
+    if (!focusables.length) return;
+    const first = focusables[0], last = focusables[focusables.length - 1];
+    if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+    else if (!focusables.includes(document.activeElement)) { ev.preventDefault(); first.focus(); }
+  }
+}
+
+const shortcutsState = { lastFocus: null };
+function shortcutsOpen() {
+  if (shortcutsIsOpen()) return;
+  shortcutsState.lastFocus = document.activeElement;
+  $("#shortcuts-overlay").hidden = false;
+  $("#shortcuts-modal").focus();
+}
+function shortcutsClose() {
+  if (!shortcutsIsOpen()) return;
+  $("#shortcuts-overlay").hidden = true;
+  if (shortcutsState.lastFocus && typeof shortcutsState.lastFocus.focus === "function") shortcutsState.lastFocus.focus();
+}
+
+function wireShortcutsOverlay() {
+  populateShortcutsList();
+  $("#shortcuts-close").addEventListener("click", shortcutsClose);
+  $("#shortcuts-scrim").addEventListener("click", shortcutsClose);
+}
+
+/** The one shared global keydown handler: Ctrl/Cmd+K toggles the palette
+ * from anywhere (even while typing, like Linear); every other shortcut
+ * here (bare "/", "?", "1".."4") is suppressed while any dialog (palette,
+ * shortcuts help, acceptance-demo tour) is open, or while an
+ * input/textarea/select/contenteditable has focus -- so typing "1-4" or
+ * "/" into #qa-input, #ask-input, etc. is never hijacked. */
+function wireGlobalShortcuts() {
+  document.addEventListener("keydown", (ev) => {
+    // The acceptance-demo tour is its own modal experience with its own
+    // capture-phase key handler (tourKeyHandler, registered only while
+    // tourState.active) -- while it's open, none of the shortcuts below
+    // (including Ctrl/Cmd+K) should also fire.
+    if (tourState.active) return;
+
+    const mod = ev.ctrlKey || ev.metaKey;
+    if (mod && (ev.key === "k" || ev.key === "K")) {
+      ev.preventDefault();
+      if (cmdk.open) cmdkClose(); else cmdkOpen();
+      return;
+    }
+    if (ev.key === "Escape") {
+      if (cmdk.open) { ev.preventDefault(); cmdkClose(); return; }
+      if (shortcutsIsOpen()) { ev.preventDefault(); shortcutsClose(); return; }
+      return;
+    }
+    if (cmdk.open || shortcutsIsOpen()) return;
+    if (isTypingTarget(document.activeElement)) return;
+
+    if (ev.key === "/") { ev.preventDefault(); cmdkOpen(); return; }
+    if (ev.key === "?") { ev.preventDefault(); shortcutsOpen(); return; }
+    if (ev.key === "1") { ev.preventDefault(); setActiveStage("profile"); return; }
+    if (ev.key === "2") { ev.preventDefault(); setActiveStage("understand"); return; }
+    if (ev.key === "3") { ev.preventDefault(); setActiveStage("prepare"); return; }
+    if (ev.key === "4") { ev.preventDefault(); setActiveStage("safety"); return; }
+  });
+}
+
+/* ---------------------------------------------------------------------
    Optional AI layer (additive). Talks only to same-origin /api/* on the
    tiny local Flask server (server.py); if that server isn't running
    (e.g. this file was opened directly, no server needed for anything
@@ -1962,6 +2924,38 @@ function renderAiNotes() {
   });
   $all("[data-ai-action]").forEach((btn) => { btn.disabled = !AI.up; });
   updateEvaluateButtonState();
+  renderStatusTicker();
+}
+
+/** Live status ticker (footer strip) -- every figure is read directly from
+ * DATA or the live AI health state checkAiHealth() populates; nothing here
+ * is hardcoded. Re-rendered at init and again once the AI health check
+ * resolves (see renderAiNotes(), called at the end of checkAiHealth()). */
+function renderStatusTicker() {
+  const strip = $("#status-ticker");
+  if (!strip) return;
+  const results = DATA.adversarial_results || [];
+  const passed = results.filter((r) => r.pass).length;
+  const householdCount = Object.keys(DATA.profiles).length;
+  const ruleCount = Object.keys(DATA.rules).length;
+  const aiText = !AI.checked
+    ? "AI: checking…"
+    : (AI.up ? (AI.model ? `AI: ${AI.model}` : "AI: deterministic mode") : "AI: offline · deterministic mode");
+  const items = [
+    { dot: "ok", text: `${passed}/${results.length} adversarial refusals` },
+    { dot: "info", text: `${householdCount} households loaded` },
+    { dot: "info", text: `thresholds frozen ${DATA.thresholds.effective_date}` },
+    { dot: "info", text: `rules corpus: ${ruleCount} cited rules` },
+    { dot: AI.checked && AI.up ? "ok" : "info", text: aiText },
+  ];
+  strip.innerHTML = "";
+  items.forEach((item, i) => {
+    if (i > 0) strip.appendChild(el("span", { class: "ticker-sep", "aria-hidden": "true", text: "·" }));
+    strip.appendChild(el("span", { class: "ticker-item" }, [
+      el("span", { class: "dot " + item.dot, "aria-hidden": "true" }),
+      el("span", { text: item.text }),
+    ]));
+  });
 }
 
 function resetAiPanels() {
@@ -1988,13 +2982,23 @@ function resetAiPanels() {
 function setAiBadge(id, source) {
   const badge = $("#" + id);
   if (!badge) return;
+  const langSuffix = state.aiLanguage === "es" ? " · Español" : "";
   if (source === "openai") {
-    badge.textContent = "AI-worded · numbers are deterministic";
+    badge.textContent = "AI-worded · numbers are deterministic" + langSuffix;
     badge.className = "ai-badge openai";
   } else {
-    badge.textContent = "Deterministic wording";
+    badge.textContent = "Deterministic wording" + langSuffix;
     badge.className = "ai-badge deterministic";
   }
+}
+
+function wireAiLanguage() {
+  const sel = $("#ai-language");
+  if (!sel) return;
+  sel.value = state.aiLanguage;
+  sel.addEventListener("change", () => {
+    state.aiLanguage = sel.value === "es" ? "es" : "en";
+  });
 }
 
 /** Fetches a streamed text/plain endpoint and types it into `panel`,
@@ -2049,7 +3053,7 @@ function wireAiExplain() {
     const panel = $("#explain-panel");
     const citeStrip = $("#explain-citations");
     citeStrip.innerHTML = "";
-    streamIntoPanel("/api/explain", { household_id: hid }, panel, "explain-badge", () => {
+    streamIntoPanel("/api/explain", { household_id: hid, language: state.aiLanguage }, panel, "explain-badge", () => {
       [ruleById("CH-INCOME-001"), ruleById("CH-READINESS-001"), ruleById(DATA.thresholds.rule_id)].forEach((r) => {
         citeStrip.appendChild(citeChip(r));
       });
@@ -2063,7 +3067,7 @@ function wireAiCoach() {
     const profile = currentProfile();
     if (!profile) return;
     const panel = $("#coach-panel");
-    streamIntoPanel("/api/coach", { household_id: hid }, panel, "coach-badge");
+    streamIntoPanel("/api/coach", { household_id: hid, language: state.aiLanguage }, panel, "coach-badge");
   });
 }
 
@@ -2090,7 +3094,7 @@ function wireAiAsk() {
       const res = await fetch("/api/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ household_id: hid, question }),
+        body: JSON.stringify({ household_id: hid, question, language: state.aiLanguage }),
       });
       const source = res.headers.get("x-realdoor-source") || "deterministic";
       setAiBadge("ask-badge", source);
@@ -2173,14 +3177,20 @@ function init() {
   wireFirewall();
   wireUpload();
   wireTheme();
+  wireTour();
+  wireAiLanguage();
   wireAiExplain();
   wireAiCoach();
   wireAiAsk();
   wireRedteam();
+  wireCommandPalette();
+  wireShortcutsOverlay();
+  wireGlobalShortcuts();
   const first = Object.keys(DATA.profiles).sort()[0];
   $("#household-select").value = first;
   selectHousehold(first);
   $("#build-stamp").textContent = `Event date ${DATA.event_date} · currency cutoff ${DATA.currency_cutoff_days} days`;
+  renderStatusTicker();
   checkAiHealth();
   window.addEventListener("resize", () => updateTraceBeam());
 }

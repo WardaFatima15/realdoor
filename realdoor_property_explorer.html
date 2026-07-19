@@ -45,7 +45,11 @@
   legend{font-weight:700;font-size:13.5px;padding:0;margin-bottom:7px}
   .chk{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:14px;cursor:pointer}
   .chk input{width:17px;height:17px;accent-color:var(--slate);cursor:pointer}
-  select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:7px;font:inherit;background:#fff}
+  select,input[type=text],input[type=number]{width:100%;padding:8px 10px;border:1px solid var(--line);
+    border-radius:7px;font:inherit;font-size:14px;background:#fff;color:var(--ink)}
+  .field{display:block;font-weight:700;font-size:13.5px;margin-bottom:6px}
+  .field + .field{margin-top:12px}
+  .fieldhint{font-size:11.5px;color:var(--ink-soft);font-weight:400;margin-top:3px}
   .reset{margin-top:2px;background:none;border:1px solid var(--line);border-radius:7px;padding:8px 12px;
     font:inherit;font-size:13px;cursor:pointer;color:var(--slate-deep)}
   .reset:hover{background:var(--paper)}
@@ -136,6 +140,25 @@
         <legend><label for="city-sel">City</label></legend>
         <select id="city-sel"><option value="">All cities</option></select>
       </fieldset>
+      <fieldset>
+        <legend><label for="zip-filter">ZIP code</label></legend>
+        <input type="text" id="zip-filter" inputmode="numeric" maxlength="5" placeholder="e.g. 02118">
+      </fieldset>
+      <fieldset>
+        <label class="field" for="li-min">Minimum affordable units<span class="fieldhint" id="li-range-hint"></span></label>
+        <input type="number" id="li-min" min="0" placeholder="Any">
+        <label class="field" for="total-min" style="margin-top:12px">Minimum total units<span class="fieldhint" id="total-range-hint"></span></label>
+        <input type="number" id="total-min" min="0" placeholder="Any">
+        <label class="field" for="yr-min" style="margin-top:12px">Placed in service, on or after</label>
+        <input type="number" id="yr-min" min="1900" max="2026" placeholder="Any year">
+        <p class="fieldhint" style="margin-top:6px">Records with no reported year are excluded when this filter is set — they are not assumed to fail it.</p>
+      </fieldset>
+      <fieldset>
+        <legend>Data quality</legend>
+        <label class="chk"><input type="checkbox" id="quality-year"> Only records with a reported year</label>
+        <label class="chk"><input type="checkbox" id="quality-geo"> Only high-precision locations (HUD geocode R)</label>
+        <p class="fieldhint">Per HUD-GEO-001: R and 4 are HUD's higher-precision geocodes; other codes (e.g. T) are less granular. Neither toggle changes ranking — both only hide records that don't match, same as every other filter here.</p>
+      </fieldset>
       <button class="reset" id="reset" type="button">Clear all filters</button>
     </div>
 
@@ -154,8 +177,14 @@
         <h2>Metro location</h2>
         <span class="count" id="map-count" aria-hidden="true"></span>
       </div>
-      <svg id="map" viewBox="0 0 620 340" role="img" aria-label="Scatter plot of property locations by coordinate. Use the property list below for full details."></svg>
+      <svg id="map" viewBox="0 0 620 340" role="img" aria-label="Scatter plot of property locations by coordinate. Click anywhere on the map to set a reference point and measure distance. Use the property list below for full details." tabindex="0"></svg>
       <p class="caveat">Points show a general project location (HUD geocode precision). Not an address, not a vacancy, not a rent.</p>
+      <p class="caveat">Click anywhere on the map to drop a reference point — distances below are calculated from it, straight-line, in miles. <button class="reset" id="clear-ref" type="button" style="display:none;margin-left:6px;padding:3px 9px;font-size:12px">Clear reference point</button></p>
+      <p class="fieldhint" id="ref-status" role="status" aria-live="polite" style="padding:0 0 8px"></p>
+      <div id="dist-filter-wrap" style="display:none;max-width:260px;padding:0 0 10px">
+        <label class="field" for="dist-max">Within distance of reference point (miles)</label>
+        <input type="number" id="dist-max" min="0" step="0.5" placeholder="Any distance">
+      </div>
     </div>
 
     <div class="toolbar">
@@ -165,6 +194,9 @@
           <option value="none">Dataset order</option>
           <option value="az">Name A–Z</option>
           <option value="city">City A–Z</option>
+          <option value="li">Most affordable units</option>
+          <option value="units">Most total units</option>
+          <option value="distance">Distance (nearest first) — set a reference point on the map first</option>
         </select>
         <span class="ordernote">Order is not a recommendation.</span>
       </div>
@@ -188,7 +220,10 @@ const LAT0=42.240885, LAT1=42.427368, LON0=-71.150028, LON1=-70.979697;
 const PAD=24, W=620, H=340;
 const x = lon => PAD + (lon-LON0)/(LON1-LON0)*(W-2*PAD);
 const y = lat => H-PAD - (lat-LAT0)/(LAT1-LAT0)*(H-2*PAD);
+const lonFromX = px => LON0 + (px-PAD)/(W-2*PAD)*(LON1-LON0);
+const latFromY = py => LAT0 + (H-PAD-py)/(H-2*PAD)*(LAT1-LAT0);
 let selected=null;
+let refPoint=null; // {lat, lon} set by clicking the map -- a real renter-chosen point, never geocoded/guessed
 const svg=document.getElementById('map');
 const results=document.getElementById('results');
 const liveCount=document.getElementById('live-count');
@@ -200,18 +235,52 @@ const cities=[...new Set(DATA.map(d=>d.city))].sort();
 const citySel=document.getElementById('city-sel');
 cities.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;citySel.appendChild(o);});
 
+// Data-quality-aware min/max hints, computed from the real dataset (never invented).
+const liVals=DATA.map(d=>d.li), totalVals=DATA.map(d=>d.total);
+document.getElementById('li-range-hint').textContent=' (0–'+Math.max(...liVals)+' in this set)';
+document.getElementById('total-range-hint').textContent=' (0–'+Math.max(...totalVals)+' in this set)';
+
 function activeBeds(){return [...document.querySelectorAll('#bedrooms input:checked')].map(i=>i.value);}
+function yearReported(d){ return !!d.yr && d.yr!=='8888'; }
+function yearDisplay(d){ return yearReported(d) ? d.yr : 'Not reported'; }
+
+// Haversine great-circle distance in miles between two real lat/lon points.
+function milesBetween(lat1,lon1,lat2,lon2){
+  const R=3958.8, toRad=v=>v*Math.PI/180;
+  const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
+  const a=Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+function distanceTo(d){ return refPoint ? milesBetween(refPoint.lat,refPoint.lon,d.lat,d.lon) : null; }
 
 function currentSet(){
   const beds=activeBeds(); const city=citySel.value;
+  const zip=document.getElementById('zip-filter').value.trim();
+  const liMin=parseFloat(document.getElementById('li-min').value);
+  const totalMin=parseFloat(document.getElementById('total-min').value);
+  const yrMin=parseFloat(document.getElementById('yr-min').value);
+  const onlyReportedYear=document.getElementById('quality-year').checked;
+  const onlyHighPrecision=document.getElementById('quality-geo').checked;
+  const distMax=parseFloat(document.getElementById('dist-max').value);
+
   let set=DATA.filter(d=>{
     if(city && d.city!==city) return false;
     for(const b of beds){ if(!(d[b]>0)) return false; }
+    if(zip && !d.zip.startsWith(zip)) return false;
+    if(!isNaN(liMin) && !(d.li>=liMin)) return false;
+    if(!isNaN(totalMin) && !(d.total>=totalMin)) return false;
+    if(!isNaN(yrMin)){ if(!yearReported(d)) return false; if(!(parseInt(d.yr,10)>=yrMin)) return false; }
+    if(onlyReportedYear && !yearReported(d)) return false;
+    if(onlyHighPrecision && d.geo!=='R') return false;
+    if(refPoint && !isNaN(distMax) && !(distanceTo(d)<=distMax)) return false;
     return true;
   });
   const s=document.getElementById('sort').value;
   if(s==='az') set=[...set].sort((a,b)=>a.name.localeCompare(b.name));
   else if(s==='city') set=[...set].sort((a,b)=>a.city.localeCompare(b.city)||a.name.localeCompare(b.name));
+  else if(s==='li') set=[...set].sort((a,b)=>b.li-a.li);
+  else if(s==='units') set=[...set].sort((a,b)=>b.total-a.total);
+  else if(s==='distance' && refPoint) set=[...set].sort((a,b)=>distanceTo(a)-distanceTo(b));
   return set;
 }
 
@@ -233,6 +302,8 @@ function drawMap(set){
   const fr=document.createElementNS('http://www.w3.org/2000/svg','rect');
   fr.setAttribute('x',1);fr.setAttribute('y',1);fr.setAttribute('width',W-2);fr.setAttribute('height',H-2);
   fr.setAttribute('fill','none');fr.setAttribute('stroke','#E3EAEC');fr.setAttribute('rx',8);svg.appendChild(fr);
+  fr.style.cursor='crosshair';
+  fr.addEventListener('click', mapClickToRef);
   DATA.forEach(d=>{
     if(!ids.has(d.id)) return;
     const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
@@ -241,11 +312,42 @@ function drawMap(set){
     c.setAttribute('tabindex','0');c.setAttribute('role','button');
     c.setAttribute('aria-label',d.name+', '+d.city+'. Show details.');
     const act=()=>{selected=d.id;render();document.getElementById('card-'+d.id)?.scrollIntoView({block:'nearest'});};
-    c.addEventListener('click',act);
+    c.addEventListener('click',e=>{e.stopPropagation();act();});
     c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}});
     svg.appendChild(c);
   });
+  if(refPoint){
+    const rx=x(refPoint.lon), ry=y(refPoint.lat);
+    const ring=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    ring.setAttribute('cx',rx.toFixed(1));ring.setAttribute('cy',ry.toFixed(1));ring.setAttribute('r',10);
+    ring.setAttribute('fill','none');ring.setAttribute('stroke','#245C6B');ring.setAttribute('stroke-width',2);
+    ring.setAttribute('stroke-dasharray','3,2');ring.setAttribute('aria-hidden','true');svg.appendChild(ring);
+    const cross=document.createElementNS('http://www.w3.org/2000/svg','path');
+    cross.setAttribute('d',`M${rx-6} ${ry} H${rx+6} M${rx} ${ry-6} V${ry+6}`);
+    cross.setAttribute('stroke','#245C6B');cross.setAttribute('stroke-width',2);cross.setAttribute('aria-hidden','true');
+    svg.appendChild(cross);
+  }
 }
+
+function mapClickToRef(evt){
+  const rect=svg.getBoundingClientRect();
+  const px=(evt.clientX-rect.left)/rect.width*W;
+  const py=(evt.clientY-rect.top)/rect.height*H;
+  refPoint={lat:latFromY(py), lon:lonFromX(px)};
+  document.getElementById('clear-ref').style.display='inline-block';
+  document.getElementById('dist-filter-wrap').style.display='block';
+  document.getElementById('ref-status').textContent='Reference point set at '+refPoint.lat.toFixed(4)+', '+refPoint.lon.toFixed(4)+' (approximate — read from where you clicked, not geocoded).';
+  render();
+}
+document.getElementById('clear-ref').addEventListener('click',()=>{
+  refPoint=null;
+  document.getElementById('clear-ref').style.display='none';
+  document.getElementById('dist-filter-wrap').style.display='none';
+  document.getElementById('dist-max').value='';
+  document.getElementById('ref-status').textContent='';
+  if(document.getElementById('sort').value==='distance') document.getElementById('sort').value='none';
+  render();
+});
 
 function render(){
   const set=currentSet();
@@ -263,24 +365,32 @@ function render(){
     const el=document.createElement('article');
     el.className='prop'+(d.id===selected?' sel':'');
     el.id='card-'+d.id;
+    const dist=distanceTo(d);
     el.innerHTML=
       '<h3>'+d.name+'</h3>'+
       '<p class="addr">'+d.addr+', '+d.city+' '+d.zip+'</p>'+
       UNKNOWN+
       '<dl class="facts">'+
         '<dt>Affordable units</dt><dd>'+d.li+' of '+d.total+'</dd>'+
-        '<dt>Placed in service</dt><dd>'+(d.yr||'—')+'</dd>'+
+        '<dt>Placed in service</dt><dd>'+yearDisplay(d)+'</dd>'+
+        (dist!==null ? '<dt>Distance from reference point</dt><dd>≈ '+dist.toFixed(1)+' mi (straight-line)</dd>' : '')+
       '</dl>'+
       '<div class="mix"><b>Unit mix:</b> '+mixStr(d)+'</div>'+
-      '<div class="geo">◧ '+d.lat.toFixed(5)+', '+d.lon.toFixed(5)+' · geocode '+d.geo+' (general location)</div>';
+      '<div class="geo">◧ '+d.lat.toFixed(5)+', '+d.lon.toFixed(5)+' · geocode '+d.geo+' ('+(d.geo==='R'?'high precision':'lower precision')+', general location, not an address)</div>';
     results.appendChild(el);
   });
 }
 
-document.querySelectorAll('#bedrooms input, #city-sel, #sort').forEach(el=>el.addEventListener('change',()=>{selected=null;render();}));
+document.querySelectorAll('#bedrooms input, #city-sel, #sort, #quality-year, #quality-geo').forEach(el=>el.addEventListener('change',()=>{selected=null;render();}));
+document.querySelectorAll('#zip-filter, #li-min, #total-min, #yr-min, #dist-max').forEach(el=>el.addEventListener('input',()=>{selected=null;render();}));
 document.getElementById('reset').addEventListener('click',()=>{
   document.querySelectorAll('#bedrooms input').forEach(i=>i.checked=false);
-  citySel.value='';document.getElementById('sort').value='none';selected=null;render();
+  citySel.value='';document.getElementById('sort').value='none';selected=null;
+  document.getElementById('zip-filter').value='';
+  document.getElementById('li-min').value='';document.getElementById('total-min').value='';document.getElementById('yr-min').value='';
+  document.getElementById('quality-year').checked=false;document.getElementById('quality-geo').checked=false;
+  document.getElementById('dist-max').value='';
+  render();
 });
 function ctxToggle(){
   const on=document.getElementById('ctx-transit').checked||document.getElementById('ctx-need').checked;
