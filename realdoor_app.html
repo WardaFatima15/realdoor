@@ -829,6 +829,13 @@ const REASON_TEXT = {
   UNVERIFIED_CLAIM: "The only income evidence on file is a self-declaration, not independent evidence.",
 };
 
+const OBTAIN_DOCS = {
+  PAY_STUB_MISSING: "How to obtain: Log in to your employer's payroll portal (like ADP, Workday, or Gusto) or contact your HR department to request copies of your most recent pay stubs.",
+  EMPLOYMENT_LETTER_MISSING_NO_WAGE_EVIDENCE: "How to obtain: Request a formal verification of employment on company letterhead from your manager or HR department. It must be dated within 60 days.",
+  EMPLOYMENT_LETTER_EXPIRED: "How to obtain: Request an updated verification of employment from your manager or HR department. The new letter must be dated within 60 days of the application date.",
+  BENEFIT_LETTER_EXPIRED: "How to obtain: You can download a current Benefit Verification Letter online via your 'my Social Security' account at ssa.gov, or request one by calling 1-800-772-1213."
+};
+
 /* ---------------------------------------------------------------------
    Helpers
 --------------------------------------------------------------------- */
@@ -1977,12 +1984,17 @@ function renderPrepare() {
     ]));
 
     profile.reasons.forEach((r) => {
+      const reasonChildren = [
+        el("strong", { text: r.replace(/_/g, " ") + ": " }),
+        document.createTextNode(REASON_TEXT[r] || "See documentation for this reason code."),
+      ];
+      if (OBTAIN_DOCS[r]) {
+        reasonChildren.push(el("br"));
+        reasonChildren.push(el("em", { text: OBTAIN_DOCS[r], style: "color: var(--slate-deep); font-size: 0.9em; display: inline-block; margin-top: 4px;" }));
+      }
       reasonList.appendChild(el("li", {}, [
         el("span", { "aria-hidden": "true", text: "⚠" }),
-        el("span", {}, [
-          el("strong", { text: r.replace(/_/g, " ") + ": " }),
-          document.createTextNode(REASON_TEXT[r] || "See documentation for this reason code."),
-        ]),
+        el("span", {}, reasonChildren),
       ]));
     });
     profile.notes.forEach((n) => {

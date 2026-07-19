@@ -1,0 +1,655 @@
+6TH GLOBAL AI HACKATHON
+in collaboration with MIT Club of Northern California and MIT Club of Germany
+July 18-19, 2026
+Sponsored and presented by
+2
+Your hosts 
+today
+Kai N. Wiederhold
+MIT Sloan, MBA
+CEO Hack-Nation
+Lead Start-ups & AI MIT Club of 
+Germany
+Munich, Germany
+Linn Bieske
+MIT, MS CS + MBA (LGO)
+Lead AI & Tech Track MIT Club of 
+Northern California
+San Franscisco, CA, USA
+3
+Our mission:
+We give builders a 
+starting line to tackle 
+real problems and ship 
+real solutions
+Work on real problems, not toy prompts
+Build on live challenges from companies and investors
+What you'll do here
+Build fast, learn by shipping
+Learn AI by executing, iterating, and owning outcomes
+Turn projects into your next career step
+Strong work doesn’t end on Sunday: Turn your solution into a 
+venture, or secure a follow-up with our partners
+4
+You’re here because 
+you’ve earned it.
+Welcome to a global 
+cohort of builders who 
+don’t just talk — but 
+ship
+>600
+Top universities represented by our participants 
+>125
+Countries represented by our participants 
+>5.500
+Applications for this hackathon
+You’re part of a select global cohort
+5
+5
+…and then incubate the top teams in 
+our venture lab
+In cooperation with:
+WE.
+ARE. 
+HACK-NATION.
+We host hackathons with 2k+ people 
+to find the best talent…
+Global AI Hackathon
+MBA coach per team
+Supporting top technical founders on strategy, go-to-market, and 
+company building
+Dedicated senior mentor
+Each team is matched with an experienced operator (founder or Big 
+Tech) for weekly guidance
+1M EUR per team: Compute & tooling credits
+Free API credits and premium tools provided in collaboration 
+with our partners
+How we incubate: 
+Our top teams go 
+through an intensive 3-
+month incubation, 
+combining hands-on 
+support, expert 
+mentorship, and direct 
+investor access 
+Founder-led workshops & online-tool
+Hands-on sessions with top-tier founders and on-
+demand learning platform 
+Demo & Investor Day
+Curated exposure to investors to support pre-seed fundraising
+What we provide
+7
+https://tinyurl.com/6-
+HN-Discord
+Join our Discord Channel for questions and 
+announcements:
+General question: Ask our bot in FAQ /FAQ query
+Hub updates: Click on your hub in pick-your-hub
+Pics: Send your best pictures and quotes in here 
+#pictures-and-quotes
+First things first: Join our Discord
+USE OUR FAQ BOT with /FAQ
+We have 12 official hubs participating  
+Stanford, US
+Nordic innovation house
+Boston, US
+MITAS
+Linz, AT
+Factory 300  | Young AI leaders 
+San Francisco, US
+European Startup Embassy
+Zurich, CH
+Rapidata | 0sec
+NYC, US
+Sequence Holdings
+London, UK
+HALKIN | CoAI Club
+Munich, DE
+Manage & more
+Yerevan, AM
+TUMO
+Dresden, DE
+YETI | Boost
+Delhi, IN
+NoClue
+Brussels, BE
+NorthStar
+9
+What you can 
+expect during the 
+next two days
+Kick-off & speaker session
+12:00 PM – 12:50 PM
+Saturday, July 18
+Hacking begins
+1:00 PM
+Submission deadline
+9:00 AM
+Sunday, July 19
+Awards Ceremony
+1:15 PM
+Reveal of challenges
+12:50 PM – 1:00 PM
+Time (ET)
+Finalist Pitches (3 Mins)
+1st – 2nd place of each challenge will pitch for the grand prize
+12:00 PM – 1:00 PM
+Super important: 
+Please come back and be ready to pitch. 
+Top 2 teams by challenge pitch live for prizes
+Needed: 1-2 Slides + Demo
+Saturday, July 25
+Our speakers for today
+Arthur Dooner
+Databricks
+Solutions Architect
+Carsten Maschmeyer
+Maschmeyer Group
+CEO
+>50k$ in prizes across all challenges
+Grand prize 
+Venture Lab Fast Track
++$5k API
+OpenAI
+Top 2 places of each challenges are 
+invited to pitch live for the grand 
+prize
+Overall 1st 
+1st 
+2nd 
+3rd 
+Place
+Challenges
+$1k
+$3k API
+OpenAI
+$450
+$1.5k API
+OpenAI
+$200
+$1k
+$3k API
+OpenAI
+$450
+$1.5k API
+OpenAI
+$200
+$1k
+$3k API
+OpenAI
+$450
+$1.5k API
+OpenAI
+$200
+$1k
+6mon.
+ElevenLabs
+Scale Tier
+$450
+3mon.
+ElevenLabs
+Scale Tier
+$200
+3mon.
+ElevenLabs
+pro Tier
+$4k API
+OpenAI
+$2k API
+OpenAI
+$200 API
+OpenAI
+$4k API
+OpenAI
+$2k API
+OpenAI
+$200 API
+OpenAI
+On top, we have five community prizes
+Outstanding community 
+builder and referrer 
+Community Builder 
+award
+Most "out-of-the-box" 
+submission
+One volunteer who went 
+above and beyond 
+We loved your quotes 
+last time – let's keep 
+the engagement high 
+Team with the most 
+reactions on LinkedIn
+Tag us until Apr. 26 9 am 
+ET
+1
+Creativity award
+Above and 
+Beyond award
+2
+3
+Best Quote award
+Go Viral award
+4
+5
+$500 OpenAI credits for each winner
+13
+13
+13
+You’ll have the 
+chance to join us at 
+the MIT AI 
+conference & the 
+Harvard German 
+American 
+Conference
+14
+We have >20 mentors who are here to help 
+you with your project
+Sign-up for a 15-30 mins 
+slot online on 
+Projects.hack-nation.ai
+Come prepared with 
+concrete questions
+Mentors will need to accept 
+your booking first 
+You'll receive an email from 
+Linn@hack-nation.com 
+-> Whitelist that e-mail
+15
+Challenge Specific Office Hours
+1:30 – 2:30 PM ET
+Join the call & deep-dive 
+into the challenge
+VC Brain – Meet Carl
+https://mit.zoom.us/j/99834322862
+#2
+Women’s Health – Meet Juan
+https://mit.zoom.us/j/7984419023
+#5
+Biosecurity – Meet Faith
+https://meet.google.com/hwh-iwms-ter
+#6
+Be curious & ask questions
+Share the space & learn 
+from each other
+We will share the zoom links 
+on Discor
+16
+Our >170 judges come from world class 
+organizations and are experts in AI…
+Technical depth
+Complexity, implementation and 
+engineering quality 
+Communication
+Documentation and presentation 
+(incl. video)
+Innovation & creativity
+Originality and creative approach of 
+solution 
+...judging 3 criteria
+Challenge 
+Sponsors
+THANK YOU to our sponsors!
+Hub sponsors & 
+collaborators 
+Community and in-
+kind sponsors
+API sponsors
+MIT Sloan 
+AI Club
+Please welcome our speaker
+Carsten Maschmeyer
+Maschmeyer Group
+CEO
+Please welcome our speaker
+Arthur Dooner
+Databricks
+Sr. Specialist Solutions 
+Architect
+State of the Art Agentic AI:
+A Databricks Field 
+Perspective
+Arthur Dooner
+About me
+Arthur Dooner
+Sr. Specialist Solution Architect
+AI Lead for Manufacturing - Databricks
+Teams spend progressively less time as we go further down this chain
+The AgentOps 
+Lifecycle
+Deployment
+Data Collection
+Data Prep
+Evaluation
+Data Scientists &
+Software Engineers
+Data Engineer
+ML Engineer
+Databricks 
+Apps
+Model 
+Serving
+Context 
+Retrieval
+Tool & 
+Function 
+Calling
+Building / Tuning
+Data 
+indexing
+Domain Experts
+AI Judges
+AI Tracing
+AI Tracing
+AI Guardrails
+AI Tracing
+Inference 
+Tables
+What is a trace?
+It tells you what your 
+agent did, and when.
+●Tool calls
+●LLM calls
+●Errors
+Each step is called a 
+span.
+Provides end-to-end 
+observability.
+import mlflow
+from mlflow.entities.trace_location import 
+UnityCatalog
+mlflow.set_experiment(
+ 
+name=”...”,
+ 
+trace_location=UnityCatalog(
+ 
+ 
+catalog_name=catalog_name,
+    
+schema_name=schema_name,
+    
+table_prefix=table_prefix,
+),
+)
+@mlflow.trace
+def my_agent():
+ 
+…
+Tracing your agent 
+using MLflow
+Docs
+You can use any agent framework 
+you want, including LangChain, 
+Strands, Vercel AI SDK, Claude Agent 
+SDK, etc.
+Aligning your Judge
+Docs
+import mlflow
+from mlflow.genai.scorers import Safety
+# Get traces from your experiment
+traces_with_feedback = mlflow.search_traces(...)
+# Start with a judge, built-in or custom
+judge_to_align = Safety()
+# Align judge to SME feedback
+judge = judge_to_align.align(
+traces_with_feedback
+)
+# Save judge
+aligned_judge.register(...)
+You only need a handful of traces 
+labeled by an SME to get started.
+Dynamically adjusts the judge 
+prompt when evaluating traces so 
+that it more accurately aligns with 
+SME preferences. We call this 
+MemAlign.
+Configured in MLflow  →  triggers actions in your CI runner
+Web UI
+Native App
+Mobile UI
+Terminal UI
+REST API
+Common API
+Coding Agents
+Custom Agents
+Meta-Harness
+Server
+History
+Catalog
+Policies
+MCPs
+Artifacts
+Skills
+Sandboxing
+Reliability
+Runner
+gives you
+What
+Composition
+•
+Combine agents using multiple 
+harnesses / LLMs
+•
+Switch agent harness
+gives you
+What
+Composition
+Collaboration
+•
+Combine agents using multiple 
+harnesses / LLMs
+•
+Switch agent harness
+•
+Share and co-drive live 
+sessions with other people
+•
+Comment on files / docs
+gives you
+What
+Composition
+Collaboration
+Control
+•
+Combine agents using multiple 
+harnesses / LLMs
+•
+Switch agent harness
+•
+Share and co-drive live 
+sessions with other people
+•
+Comment on files / docs
+•
+Powerful contextual policies 
+for security and cost
+•
+Strong OS sandbox
+Policies
+AI needs a layer above the 
+harness to reach its potential
+Meta-harnesses make agents truly powerful and usable
+omnigent.ai
+Rules (1/2): Create an account, choose any challenge 
+and submit on website
+Be sure to submit on time (9am ET) – no late submissions are accepted to win prizes
+Submissions must have follow the submission guideline (next page)
+Choose a challenge and let us know in Discord which one you will be tackling 
+If not done yet: Create an account on projects.hack-nation.ai – you have received a personalized 
+login code
+Submissions need to be on projects.hack-nation.ai
+Team members: Add them in the last row of the submission sheet - Every member needs an account on 
+projects.hack-nation.ai and needs to be added on the submission
+Check-list – Uploaded to projects.hack-nation.ai
+Item
+Format
+Purpose
+Project Summary
+Text (150–300 words)
+High-level pitch for the jury
+Demo Video
+Video upload
+Demonstrate your project
+Tech Video
+Video upload
+Explain how you built it
+Team video
+Video upload
+Explain who you are
+GitHub Repository
+Public link
+Source code and documentation
+Zipped Code
+.zip file
+Local backup of your project
+Dataset (if used or generated)
+Link or “N/A”
+Raw or processed data
+Rules (2/2): Create an account, choose any challenge 
+and submit on website
+3939
+39
+Free stuff? 
+Free stuff!
+Over $300k+ in credits
+Request them online via projects.hack-nation.com
+Pro Plan for everyone 
+(100 credits)
+$50k total 
+2 months tavily
+​ project for everyone
+$120k total 
+50
+750 x 50  USD
+Creator tier for free
+ for everyone
+Access for everyone
+Pro Plan for everyone 
+$40k total 
+$37.5k total 
+$55k total 
+40
+Here come the 
+challenges!
+For detailed briefings, see:
+Projects.hack-nation.ai
+41
+Challenge 1:
+The Negotiator
+Voice Agents that Call, Compare, and Haggle
+Help protect 28 million Americans who move each 
+year in a $20B+ market, where equivalent quotes can 
+vary by 5.6× and movers generate 13,000+ 
+complaints annually.
+Sponsored by
+42
+Challenge 1:
+The Negotiator
+Voice Agents that Call, Compare, and Haggle
+Build a voice-agent system that gathers comparable 
+prices by phone, negotiates better terms, and 
+recommends an evidence-backed deal in a market of 
+the team’s choice.
+Sponsored by
+43
+Challenge 2:
+The VC Brain
+Deploying $100K Checks in 24 Hours
+Enable capital to be deployed at 100× speed, giving 
+founders an evidence-backed decision on a $100,000 
+investment within 24 hours rather than waiting 
+weeks.
+Sponsored by
+44
+Challenge 2:
+The VC Brain
+Deploying $100K Checks in 24 Hours
+Build an AI-first venture-capital operating system that 
+discovers promising founders, conducts evidence-
+backed screening and diligence, and supports rapid 
+investment decisions.
+Sponsored by
+45
+Challenge 3:
+RealDoor
+Application-Readiness Copilot
+Prevent a single documentation error from delaying 
+an affordable-housing application for weeks, while 
+keeping 100% of eligibility decisions in qualified 
+human hands.
+Sponsored by
+46
+Challenge 3:
+RealDoor
+Application-Readiness Copilot
+Build a renter-controlled copilot that interprets 
+synthetic household documents, explains affordable-
+housing rules with citations, and prepares an 
+application-ready packet without deciding eligibility.
+Sponsored by
+47
+Challenge 4:
+Data Legend
+Building the Trust Layer for Indian Healthcare
+Turn 10,000 healthcare-facility records into trusted 
+planning and referral decisions for a country of 1.4 
+billion people.
+Sponsored by
+48
+Challenge 4:
+Data Legend
+Building the Trust Layer for Indian Healthcare
+Build a Databricks application that transforms 
+fragmented healthcare-facility records into evidence-
+backed, confidence-aware insights that planners can 
+verify and act on.
+Sponsored by
+49
+Challenge 5:
+Women’s Hormonal Health
+Foundational Models challenge
+Build infrastructure for more than 50% of the global 
+population and help unlock over $1 trillion in 
+annual economic impact by closing the women’s-
+health gap.
+Sponsored by
+50
+Challenge 5:
+Women’s Hormonal Health
+Foundational Models challenge
+Create an open, reusable dataset, benchmark, AI 
+model, or application that advances the research 
+infrastructure needed to understand women’s 
+hormonal health.
+Sponsored by
+51
+Challenge 6:
+Genome Firewall
+AN AI Defense System Against Superbugs
+Address antibiotic-resistant infections associated 
+with 4.7 million+ deaths annually, including 1 
+million+ deaths directly caused by resistance, while 
+potentially delivering insights 1–3 days earlier.
+Sponsored by
+52
+Challenge 6:
+Genome Firewall
+AN AI Defense System Against Superbugs
+Build a defensive AI prototype that predicts whether 
+antibiotics are likely to work or fail from a 
+reconstructed bacterial genome, with calibrated 
+confidence and supporting evidence.
+Sponsored by
+53
+https://tinyurl.com/6-
+HN-Discord 
+Join our Discord Channel for questions and 
+announcements:
+General question: Ask in #q-and-a
+Hub updates: Click on your hub in pick-your-hub
+Pics: Send your best pictures and quotes in here 
+#pictures-and-quotes
+First things first: Join our Discord
+Sponsored and presented by
+MIT Sloan AI Club

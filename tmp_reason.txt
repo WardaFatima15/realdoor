@@ -1,0 +1,13 @@
+817: const REASON_TEXT = {
+818:   PAY_STUB_TOTAL_CONFLICT: "The pay stub's stated gross pay does not reconcile with regular hours × hourly rate. The reconciled component math was used instead of the conflicting total.",
+819:   GIG_INCOME_UNCORROBORATED: "Gig income is self-reported with no independent corroborating document on file.",
+820:   EMPLOYMENT_LETTER_EXPIRED: "The employment letter is dated more than 60 days before the event date and is not current.",
+821:   BENEFIT_LETTER_EXPIRED: "The benefit letter is dated more than 60 days before the event date and is not current.",
+822:   PAY_STUB_MISSING: "No pay stub is on file, so wage income could not be established.",
+823:   WAGE_INCOME_UNRESOLVED: "Wage income fields could not be reconciled into a usable figure.",
+824:   PAY_FREQUENCY_UNKNOWN: "The stated pay frequency is not one of the recognized values.",
+825:   EMPLOYMENT_LETTER_MISSING_NO_WAGE_EVIDENCE: "No employment letter and no pay stub are on file, so wage income has no evidentiary basis.",
+826:   TRACEABILITY_FAILURE: "One or more extracted fields has a source box outside the document page and failed the traceability check.",
+827:   NO_FROZEN_THRESHOLD_FOR_HOUSEHOLD_SIZE: "There is no frozen 60% threshold row for this household size (table covers sizes 1-8 only).",
+828:   UNVERIFIED_CLAIM: "The only income evidence on file is a self-declaration, not independent evidence.",
+829: };

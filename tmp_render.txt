@@ -1,0 +1,62 @@
+1939: function renderPrepare() {
+1940:   const hid = state.householdId;
+1941:   const profile = currentProfile();
+1942:   const badge = $("#readiness-badge");
+1943:   const reasonList = $("#reason-list");
+1944:   const checklist = $("#checklist");
+1945:   badge.innerHTML = ""; reasonList.innerHTML = ""; checklist.innerHTML = "";
+1946:   $("#preview-wrap").style.display = "none";
+1947:   $("#delete-confirmation").textContent = "";
+1948:   renderPacketReadiness(profile);
+1949: 
+1950:   if (!profile) {
+1951:     badge.appendChild(el("p", { text: "Session deleted. Select the household again to start a new session." }));
+1952:     $("#btn-preview").disabled = true; $("#btn-download").disabled = true; $("#btn-delete").disabled = true;
+1953:     $("#btn-print-packet").disabled = true;
+1954:     $("#packet-print-note").textContent = "Session deleted — nothing to print.";
+1955:     $("#coach-card").style.display = "none";
+1956:     return;
+1957:   }
+1958:   const notEvaluated = isUploadNotEvaluated(hid, profile);
+1959:   $("#btn-preview").disabled = notEvaluated; $("#btn-download").disabled = notEvaluated; $("#btn-delete").disabled = false;
+1960:   $("#btn-print-packet").disabled = notEvaluated;
+1961:   $("#packet-print-note").textContent = notEvaluated
+1962:     ? "Not yet evaluated — upload documents and click \"Evaluate readiness\" on the Profile stage before printing a packet."
+1963:     : "";
+1964:   $("#coach-card").style.display = (!notEvaluated && profile.readiness_status === "NEEDS_REVIEW") ? "block" : "none";
+1965: 
+1966:   if (notEvaluated) {
+1967:     badge.appendChild(el("p", {
+1968:       style: "color:var(--ink-soft);font-size:13.5px",
+1969:       text: "Not yet evaluated. Upload at least one income document and set a household size, then click \"Evaluate readiness\" on the Profile stage.",
+1970:     }));
+1971:   } else {
+1972:     const isReady = profile.readiness_status === "READY_TO_REVIEW";
+1973:     badge.appendChild(el("span", { class: "status-badge " + (isReady ? "ready" : "needs") }, [
+1974:       el("span", { "aria-hidden": "true", text: isReady ? "✓" : "⚠" }),
+1975:       el("span", { text: profile.readiness_status.replace(/_/g, " ") }),
+1976:     ]));
+1977: 
+1978:     profile.reasons.forEach((r) => {
+1979:       reasonList.appendChild(el("li", {}, [
+1980:         el("span", { "aria-hidden": "true", text: "⚠" }),
+1981:         el("span", {}, [
+1982:           el("strong", { text: r.replace(/_/g, " ") + ": " }),
+1983:           document.createTextNode(REASON_TEXT[r] || "See documentation for this reason code."),
+1984:         ]),
+1985:       ]));
+1986:     });
+1987:     profile.notes.forEach((n) => {
+1988:       reasonList.appendChild(el("li", { style: "background:var(--teal-soft);border-color:var(--teal)" }, [
+1989:         el("span", { "aria-hidden": "true", text: "🛈" }),
+1990:         el("span", { text: n }),
+1991:       ]));
+1992:     });
+1993:   }
+1994: 
+1995:   computeChecklistRows(profile).forEach((r) => {
+1996:     checklist.appendChild(checklistRow(r.type, r.statusClass, r.icon, r.detail));
+1997:   });
+1998: 
+1999:   wirePrepareButtons(profile);
+2000: }
