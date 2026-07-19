@@ -11,3 +11,7 @@ files (1).zip
 # Superseded duplicate README drafts (README.md is canonical)
 README (1).md
 README (3).md
+
+# Large files to exclude from repo
+*.mp4
+*.pdf
